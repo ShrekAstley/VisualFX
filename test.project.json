@@ -1,0 +1,21 @@
+{
+  "name": "VisualFXTests",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedStorage": {
+      "VisualFX": {
+        "$path": "init.luau",
+        "Core": { "$path": "Core" },
+        "Runtime": { "$path": "Runtime" },
+        "AI": { "$path": "AI" },
+        "Presets": { "$path": "Presets" },
+        "Codegen": { "$path": "Codegen" }
+      },
+      "VisualFXTests": { "$path": "Tests" },
+      "VisualFXExamples": { "$path": "Examples" }
+    },
+    "ServerScriptService": {
+      "RunVisualFXTests": { "$path": "tools/RunTestsInStudio.server.luau" }
+    }
+  }
+}

@@ -1,0 +1,3246 @@
+{
+  "Format": "VisualFXConfig",
+  "Commands": {
+    "ApplyPreset": {
+      "Description": "Apply a preset (replaces the scene unless Merge = true).",
+      "Fields": {
+        "Name": {
+          "Description": "preset name",
+          "Kind": "string",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Duration": {
+          "Description": "transition duration in seconds",
+          "Kind": "number",
+          "Required": false
+        },
+        "Easing": {
+          "Description": "easing style",
+          "Kind": "string",
+          "Required": false
+        },
+        "Merge": {
+          "Description": "merge into the current scene",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Overrides": {
+          "Description": "configuration merged on top of the preset",
+          "Kind": "table",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "Batch": {
+      "Description": "Run several commands in order. Atomic (default true) reverts everything if any command fails.",
+      "Fields": {
+        "Atomic": {
+          "Description": "revert all on failure (default true)",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Commands": {
+          "Description": "array of commands",
+          "Kind": "table",
+          "Required": true
+        }
+      },
+      "Mutating": true
+    },
+    "CommitPreview": {
+      "Description": "Keep the current preview.",
+      "Fields": {},
+      "Mutating": false
+    },
+    "CreateParticleSystem": {
+      "Description": "Create or replace a named particle system.",
+      "Fields": {
+        "Name": {
+          "Description": "system name",
+          "Kind": "string",
+          "Required": true
+        },
+        "Template": {
+          "Description": "particle template",
+          "Kind": "string",
+          "Required": false
+        },
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "CreateScene": {
+      "Description": "Create a complete scene from a configuration or a description { Mood, Time, Weather, Environment, Fog, LightingStyle, WaterStyle }.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration or description",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Duration": {
+          "Description": "transition duration",
+          "Kind": "number",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "CreateWeather": {
+      "Description": "Set the weather. Type is a weather type; Configuration holds Intensity, Wind, Fog, Lightning, RainIntensity, ...",
+      "Fields": {
+        "Type": {
+          "Description": "weather type",
+          "Kind": "string",
+          "Required": true
+        },
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Duration": {
+          "Description": "transition duration in seconds",
+          "Kind": "number",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "CreateZone": {
+      "Description": "Create or replace a spatial effect zone (Environment.Zones).",
+      "Fields": {
+        "Name": {
+          "Description": "zone name",
+          "Kind": "string",
+          "Required": true
+        },
+        "Configuration": {
+          "Description": "{ Effect, Position, Size, Intensity, ... }",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "DeletePreset": {
+      "Description": "Delete a user preset (built-in presets are protected).",
+      "Fields": {
+        "Name": {
+          "Description": "preset name",
+          "Kind": "string",
+          "Required": true
+        }
+      },
+      "Mutating": false
+    },
+    "DetectConflicts": {
+      "Description": "Detect conflicts in the live scene (duplicates, stacked effects, ignored fog, ...).",
+      "Fields": {},
+      "Mutating": false
+    },
+    "DiffScene": {
+      "Description": "Compare a configuration with the live scene without changing anything.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "Merge": {
+          "Description": "diff the result of merging instead of replacing",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    },
+    "ExportConfiguration": {
+      "Description": "Export the current configuration. Format: table | json | document.",
+      "Fields": {
+        "Format": {
+          "Description": "table | json | document",
+          "Kind": "string",
+          "Required": false
+        },
+        "Resolved": {
+          "Description": "export the resolved configuration",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    },
+    "GenerateCode": {
+      "Description": "Generate readable Luau for a configuration (default: current).",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "Options": {
+          "Description": "{ Template = Script | LocalScript | Module | Transition, RequirePath, Comments }",
+          "Kind": "table",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    },
+    "GetDocumentation": {
+      "Description": "Structured agent guide (workflow, rules, actions, examples).",
+      "Fields": {},
+      "Mutating": false
+    },
+    "GetPerformanceStats": {
+      "Description": "Workload estimates (particle systems, particle rate, managed instances, update frequency).",
+      "Fields": {},
+      "Mutating": false
+    },
+    "GetPreset": {
+      "Description": "Return a preset's resolved configuration (inheritance expanded).",
+      "Fields": {
+        "Name": {
+          "Description": "preset name",
+          "Kind": "string",
+          "Required": true
+        }
+      },
+      "Mutating": false
+    },
+    "GetSchema": {
+      "Description": "Machine-readable schema of sections, fields, weather types, templates, presets and commands.",
+      "Fields": {
+        "Format": {
+          "Description": "table (default) | jsonschema",
+          "Kind": "string",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    },
+    "ImportConfiguration": {
+      "Description": "Validate and apply a configuration (table, VisualFXConfig document or JSON text).",
+      "Fields": {
+        "Apply": {
+          "Description": "apply after validation (default true)",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "Data": {
+          "Description": "table or JSON string",
+          "Kind": "any",
+          "Required": false
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Merge": {
+          "Description": "merge instead of replace",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "InspectScene": {
+      "Description": "Structured description of the current visual state, managed effects and conflicts.",
+      "Fields": {
+        "Options": {
+          "Description": "{ MaxParticles = number }",
+          "Kind": "table",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    },
+    "ListActions": {
+      "Description": "List every action with its fields.",
+      "Fields": {},
+      "Mutating": false
+    },
+    "ListPresets": {
+      "Description": "List presets. Filter: { Category, Source, Search }.",
+      "Fields": {
+        "Filter": {
+          "Description": "{ Category, Source, Search }",
+          "Kind": "table",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    },
+    "PreviewScene": {
+      "Description": "Apply a configuration as a revertible preview (merge unless Replace).",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration",
+          "Kind": "table",
+          "Required": true
+        },
+        "Replace": {
+          "Description": "replace instead of merge",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "RemoveParticleSystem": {
+      "Description": "Remove a named particle system.",
+      "Fields": {
+        "Name": {
+          "Description": "system name",
+          "Kind": "string",
+          "Required": true
+        }
+      },
+      "Mutating": true
+    },
+    "RemoveWeather": {
+      "Description": "Remove the weather and everything it created.",
+      "Fields": {},
+      "Mutating": true
+    },
+    "RemoveZone": {
+      "Description": "Remove a spatial effect zone.",
+      "Fields": {
+        "Name": {
+          "Description": "zone name",
+          "Kind": "string",
+          "Required": true
+        }
+      },
+      "Mutating": true
+    },
+    "ResetManagedEffects": {
+      "Description": "Remove all VisualFX-managed effects and restore original values. Developer content is untouched.",
+      "Fields": {},
+      "Mutating": true
+    },
+    "RevertPreview": {
+      "Description": "Undo the current preview exactly (developer edits made meanwhile are kept).",
+      "Fields": {},
+      "Mutating": false
+    },
+    "SavePreset": {
+      "Description": "Save a configuration (default: the current one) as a user preset.",
+      "Fields": {
+        "Name": {
+          "Description": "preset name",
+          "Kind": "string",
+          "Required": true
+        },
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "Overwrite": {
+          "Description": "replace an existing user preset",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    },
+    "SetAtmosphere": {
+      "Description": "Set Atmosphere properties (merge; Replace = true to replace).",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "replace the section instead of merging",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "SetClouds": {
+      "Description": "Set Clouds properties.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "replace the section",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "SetEnvironment": {
+      "Description": "Set Environment { Wind, DayNight, Zones }.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "replace the section",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "SetLighting": {
+      "Description": "Set Lighting service properties (merge; Replace = true to replace).",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "replace the section",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "SetPostProcessing": {
+      "Description": "Set post-processing effects { Bloom, ColorCorrection, DepthOfField, SunRays, Blur }.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "replace the section",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "SetQuality": {
+      "Description": "Set the quality level (Low | Medium | High | Ultra | Custom) with optional overrides.",
+      "Fields": {
+        "Level": {
+          "Description": "quality level",
+          "Kind": "string",
+          "Required": true
+        },
+        "Overrides": {
+          "Description": "profile overrides",
+          "Kind": "table",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "SetSky": {
+      "Description": "Set Sky properties.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "replace the section",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "SetWater": {
+      "Description": "Set terrain water properties (merge; Replace = true to replace).",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "replace the section",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "TransitionScene": {
+      "Description": "Smoothly transition to a configuration (merged) or preset over Duration seconds.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "Duration": {
+          "Description": "seconds (default 1)",
+          "Kind": "number",
+          "Required": false
+        },
+        "Easing": {
+          "Description": "Linear | Smooth | Sine | Quad | Cubic | Quart | Quint | Expo | Circular | Back",
+          "Kind": "string",
+          "Required": false
+        },
+        "EasingDirection": {
+          "Description": "In | Out | InOut",
+          "Kind": "string",
+          "Required": false
+        },
+        "Preset": {
+          "Description": "preset to transition to",
+          "Kind": "string",
+          "Required": false
+        },
+        "Replace": {
+          "Description": "treat Configuration as a complete scene",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "UpdateParticleSystem": {
+      "Description": "Merge changes into an existing particle system.",
+      "Fields": {
+        "Name": {
+          "Description": "system name",
+          "Kind": "string",
+          "Required": true
+        },
+        "Configuration": {
+          "Description": "partial configuration",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "UpdateScene": {
+      "Description": "Merge changes into the current scene. Use \"$remove\" to delete keys.",
+      "Fields": {
+        "Configuration": {
+          "Description": "partial configuration",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        },
+        "Duration": {
+          "Description": "transition duration",
+          "Kind": "number",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "UpdateWeather": {
+      "Description": "Merge changes into the current weather (e.g. Intensity).",
+      "Fields": {
+        "Configuration": {
+          "Description": "partial weather configuration",
+          "Kind": "table",
+          "Required": true
+        },
+        "DryRun": {
+          "Description": "only report what would change",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": true
+    },
+    "ValidateConfiguration": {
+      "Description": "Validate a configuration (default: current) without applying it.",
+      "Fields": {
+        "Configuration": {
+          "Description": "configuration table (see CONFIG_SCHEMA.md)",
+          "Kind": "table",
+          "Required": false
+        },
+        "Partial": {
+          "Description": "allow missing required fields",
+          "Kind": "boolean",
+          "Required": false
+        }
+      },
+      "Mutating": false
+    }
+  },
+  "ConfigVersion": 1,
+  "CustomEffects": {},
+  "DirectorVocabulary": {
+    "Weather": ["Autumn", "Blizzard", "Clear", "Cloudy", "Custom", "DustStorm", "Fog", "HeavyRain", "LightRain", "MagicalStorm", "Overcast", "Sandstorm", "Snow", "Thunderstorm", "Windy", "Cloudless", "Downpour", "Drizzle", "Dust", "Fair", "Fall", "Foggy", "Gray", "Grey", "Magic", "Misty", "Rain", "Rainy", "Sand", "Snowing", "Snowy", "Storm", "Stormy", "Sunny", "Wind"],
+    "Environment": ["Arctic", "City", "DenseForest", "Desert", "Forest", "Mountains", "Ocean", "Plains", "Swamp", "Tropical", "Volcanic", "Beach", "Coast", "Grassland", "Island", "Jungle", "Marsh", "Meadow", "Mountain", "Sea", "Snow", "Town", "Tundra", "Urban", "Volcano", "Woodland", "Woods"],
+    "Fog": ["Dense", "Heavy", "Light", "Medium", "None"],
+    "LightingStyle": ["Cinematic", "Dramatic", "Flat", "Moody", "Noir", "Realistic", "Soft", "Stylized", "Vibrant", "Cartoon", "Film", "Movie", "Natural", "Photoreal"],
+    "Mood": ["Calm", "Cheerful", "Dreamy", "Eerie", "Epic", "Melancholic", "Mysterious", "Ominous", "Romantic", "Serene", "Tense", "Cozy", "Creepy", "Dark", "Dramatic", "Gloomy", "Happy", "Heroic", "Horror", "Joyful", "Magical", "Menacing", "Mystery", "Peaceful", "Sad", "Scary", "Spooky", "Tranquil", "Warm"],
+    "Notes": ["Values are case/format-insensitive: \"light_rain\", \"Light Rain\" and \"LightRain\" are equivalent.", "Time also accepts a number (ClockTime 0-24). Fog also accepts a number 0-1.", "Intensity (0-1) scales weather; any configuration section (Lighting, Atmosphere, ...) may be included to override the result."],
+    "Time": ["Afternoon", "Dawn", "Dusk", "Evening", "GoldenHour", "Midnight", "Morning", "Night", "Noon", "Sunrise", "Sunset"],
+    "WaterStyle": ["CalmReflective", "DeepOcean", "Icy", "Murky", "Stormy", "TropicalClear", "Calm", "Clear", "Frozen", "Ocean", "Reflective", "Rough", "Swamp", "Tropical"]
+  },
+  "MergeRules": ["Scalars and Roblox values in an overlay replace the base value.", "Dictionaries merge recursively, key by key.", "Arrays are replaced as a whole.", "The string \"$remove\" deletes a key.", "Keys are processed in sorted order."],
+  "MetaKeys": {
+    "Version": "integer configuration version (current: 1)",
+    "Metadata": "{ Name, Author, Description, Category, Tags }",
+    "Inherits": "list of preset names merged left to right before this configuration"
+  },
+  "ParticleTemplates": {
+    "Custom": {
+      "Defaults": {
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [4, 4, 4]
+        },
+        "Attach": "World",
+        "Priority": 5,
+        "Rate": 20,
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds"
+      },
+      "Description": "Plain emitter; configure every property yourself."
+    },
+    "Dust": {
+      "Defaults": {
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [80, 30, 80]
+        },
+        "Attach": "Camera",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 200, 180, 140], [1, 200, 180, 140]]
+        },
+        "Drag": 1,
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 7,
+          "min": 4
+        },
+        "LightEmission": 0,
+        "LightInfluence": 1,
+        "Offset": {
+          "$type": "Vector3",
+          "xyz": [0, 5, 0]
+        },
+        "Priority": 3,
+        "Rate": 40,
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Box"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.15, 0], [1, 0.15, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 2,
+          "min": 0.5
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [180, 180]
+        },
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 1, 0], [0.5, 0.6, 0], [1, 1, 0]]
+        },
+        "WindAffectsDrag": true
+      },
+      "Description": "Floating dust motes around the camera."
+    },
+    "Embers": {
+      "Defaults": {
+        "Acceleration": {
+          "$type": "Vector3",
+          "xyz": [0, 4, 0]
+        },
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [6, 1, 6]
+        },
+        "Attach": "World",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 255, 170, 60], [1, 255, 80, 20]]
+        },
+        "EmissionDirection": {
+          "$type": "EnumItem",
+          "enum": "NormalId",
+          "name": "Top"
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 4,
+          "min": 2
+        },
+        "LightEmission": 1,
+        "LightInfluence": 0,
+        "Priority": 5,
+        "Rate": 30,
+        "RotSpeed": {
+          "$type": "NumberRange",
+          "max": 90,
+          "min": -90
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.15, 0], [1, 0, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 8,
+          "min": 3
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [30, 30]
+        },
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0, 0], [1, 1, 0]]
+        }
+      },
+      "Description": "Glowing embers drifting upward."
+    },
+    "Fireflies": {
+      "Defaults": {
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [60, 8, 60]
+        },
+        "Attach": "Camera",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 220, 255, 120], [1, 220, 255, 120]]
+        },
+        "Drag": 1,
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 9,
+          "min": 5
+        },
+        "LightEmission": 1,
+        "LightInfluence": 0,
+        "Offset": {
+          "$type": "Vector3",
+          "xyz": [0, 3, 0]
+        },
+        "Priority": 3,
+        "Rate": 6,
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Box"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0, 0], [0.5, 0.25, 0], [1, 0, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 1.5,
+          "min": 0.5
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [180, 180]
+        },
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 1, 0], [0.5, 0, 0], [1, 1, 0]]
+        }
+      },
+      "Description": "Slow glowing points that fade in and out."
+    },
+    "Fog": {
+      "Defaults": {
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [200, 12, 200]
+        },
+        "Attach": "Camera",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 210, 215, 220], [1, 210, 215, 220]]
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 18,
+          "min": 12
+        },
+        "LightEmission": 0,
+        "LightInfluence": 1,
+        "Offset": {
+          "$type": "Vector3",
+          "xyz": [0, 2, 0]
+        },
+        "Priority": 5,
+        "Rate": 8,
+        "RotSpeed": {
+          "$type": "NumberRange",
+          "max": 3,
+          "min": -3
+        },
+        "Rotation": {
+          "$type": "NumberRange",
+          "max": 360,
+          "min": 0
+        },
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Box"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 18, 0], [1, 28, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 1,
+          "min": 0.2
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [180, 180]
+        },
+        "Texture": "rbxasset://textures/particles/smoke_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 1, 0], [0.5, 0.82, 0], [1, 1, 0]]
+        }
+      },
+      "Description": "Large, soft, slow smoke sprites that read as low-lying volumetric fog."
+    },
+    "Leaves": {
+      "Defaults": {
+        "Acceleration": {
+          "$type": "Vector3",
+          "xyz": [2, -3, 0]
+        },
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [120, 20, 120]
+        },
+        "Attach": "Camera",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 214, 128, 44], [1, 160, 70, 30]]
+        },
+        "Drag": 0.6,
+        "EmissionDirection": {
+          "$type": "EnumItem",
+          "enum": "NormalId",
+          "name": "Bottom"
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 10,
+          "min": 6
+        },
+        "LightEmission": 0,
+        "LightInfluence": 1,
+        "Offset": {
+          "$type": "Vector3",
+          "xyz": [0, 25, 0]
+        },
+        "Priority": 4,
+        "Rate": 10,
+        "RotSpeed": {
+          "$type": "NumberRange",
+          "max": 90,
+          "min": -90
+        },
+        "Rotation": {
+          "$type": "NumberRange",
+          "max": 360,
+          "min": 0
+        },
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Box"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.6, 0], [1, 0.6, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 5,
+          "min": 2
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [40, 40]
+        },
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0, 0], [0.5, 0, 0], [1, 1, 0]]
+        },
+        "WindAffectsDrag": true
+      },
+      "Description": "Tumbling falling leaves (use a leaf texture for best results)."
+    },
+    "Magic": {
+      "Defaults": {
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [6, 6, 6]
+        },
+        "Attach": "World",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 170, 90, 255], [1, 80, 220, 255]]
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 3,
+          "min": 1.5
+        },
+        "LightEmission": 1,
+        "LightInfluence": 0,
+        "Priority": 5,
+        "Rate": 40,
+        "RotSpeed": {
+          "$type": "NumberRange",
+          "max": 180,
+          "min": -180
+        },
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Sphere"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.3, 0], [1, 0, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 3,
+          "min": 1
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [180, 180]
+        },
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0, 0], [1, 1, 0]]
+        }
+      },
+      "Description": "Swirling colored sparkles."
+    },
+    "Mist": {
+      "Defaults": {
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [150, 6, 150]
+        },
+        "Attach": "Camera",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 220, 225, 230], [1, 220, 225, 230]]
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 12,
+          "min": 8
+        },
+        "LightEmission": 0,
+        "LightInfluence": 1,
+        "Offset": {
+          "$type": "Vector3",
+          "xyz": [0, 1, 0]
+        },
+        "Priority": 4,
+        "Rate": 12,
+        "RotSpeed": {
+          "$type": "NumberRange",
+          "max": 4,
+          "min": -4
+        },
+        "Rotation": {
+          "$type": "NumberRange",
+          "max": 360,
+          "min": 0
+        },
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Box"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 8, 0], [1, 12, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 0.8,
+          "min": 0.2
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [180, 180]
+        },
+        "Texture": "rbxasset://textures/particles/smoke_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 1, 0], [0.5, 0.88, 0], [1, 1, 0]]
+        }
+      },
+      "Description": "Thin, low mist; subtler than Fog."
+    },
+    "Rain": {
+      "Defaults": {
+        "Acceleration": {
+          "$type": "Vector3",
+          "xyz": [0, -40, 0]
+        },
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [160, 4, 160]
+        },
+        "Attach": "Camera",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 185, 205, 230], [1, 185, 205, 230]]
+        },
+        "EmissionDirection": {
+          "$type": "EnumItem",
+          "enum": "NormalId",
+          "name": "Bottom"
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 1.4,
+          "min": 1
+        },
+        "LightEmission": 0.1,
+        "LightInfluence": 0.9,
+        "Offset": {
+          "$type": "Vector3",
+          "xyz": [0, 55, 0]
+        },
+        "Orientation": {
+          "$type": "EnumItem",
+          "enum": "ParticleOrientation",
+          "name": "VelocityParallel"
+        },
+        "Priority": 10,
+        "Rate": 600,
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Box"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.1, 0], [1, 0.1, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 120,
+          "min": 90
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [3, 3]
+        },
+        "Squash": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 2.5, 0], [1, 2.5, 0]]
+        },
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.35, 0], [1, 0.35, 0]]
+        }
+      },
+      "Description": "Falling rain streaks (stretched with Squash, aligned to velocity)."
+    },
+    "Smoke": {
+      "Defaults": {
+        "Acceleration": {
+          "$type": "Vector3",
+          "xyz": [0, 1, 0]
+        },
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [4, 1, 4]
+        },
+        "Attach": "World",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 90, 90, 95], [1, 90, 90, 95]]
+        },
+        "EmissionDirection": {
+          "$type": "EnumItem",
+          "enum": "NormalId",
+          "name": "Top"
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 6,
+          "min": 4
+        },
+        "LightEmission": 0,
+        "LightInfluence": 1,
+        "Priority": 5,
+        "Rate": 20,
+        "RotSpeed": {
+          "$type": "NumberRange",
+          "max": 20,
+          "min": -20
+        },
+        "Rotation": {
+          "$type": "NumberRange",
+          "max": 360,
+          "min": 0
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 2, 0], [1, 6, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 6,
+          "min": 3
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [10, 10]
+        },
+        "Texture": "rbxasset://textures/particles/smoke_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.4, 0], [1, 1, 0]]
+        }
+      },
+      "Description": "Rising smoke column."
+    },
+    "Snow": {
+      "Defaults": {
+        "Acceleration": {
+          "$type": "Vector3",
+          "xyz": [0, -2, 0]
+        },
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [180, 4, 180]
+        },
+        "Attach": "Camera",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 255, 255, 255], [1, 255, 255, 255]]
+        },
+        "Drag": 0.5,
+        "EmissionDirection": {
+          "$type": "EnumItem",
+          "enum": "NormalId",
+          "name": "Bottom"
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 9,
+          "min": 6
+        },
+        "LightEmission": 0.2,
+        "LightInfluence": 1,
+        "Offset": {
+          "$type": "Vector3",
+          "xyz": [0, 45, 0]
+        },
+        "Priority": 10,
+        "Rate": 250,
+        "RotSpeed": {
+          "$type": "NumberRange",
+          "max": 40,
+          "min": -40
+        },
+        "Rotation": {
+          "$type": "NumberRange",
+          "max": 360,
+          "min": 0
+        },
+        "Shape": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShape",
+          "name": "Box"
+        },
+        "ShapeStyle": {
+          "$type": "EnumItem",
+          "enum": "ParticleEmitterShapeStyle",
+          "name": "Volume"
+        },
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.3, 0], [1, 0.3, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 8,
+          "min": 4
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [25, 25]
+        },
+        "Texture": "rbxasset://textures/particles/sparkles_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.1, 0], [1, 0.1, 0]]
+        },
+        "WindAffectsDrag": true
+      },
+      "Description": "Slowly drifting snowflakes that respond to wind."
+    },
+    "Sparks": {
+      "Defaults": {
+        "Acceleration": {
+          "$type": "Vector3",
+          "xyz": [0, -30, 0]
+        },
+        "Area": {
+          "$type": "Vector3",
+          "xyz": [1, 1, 1]
+        },
+        "Attach": "World",
+        "Color": {
+          "$type": "ColorSequence",
+          "keypoints": [[0, 255, 220, 120], [1, 255, 220, 120]]
+        },
+        "EmissionDirection": {
+          "$type": "EnumItem",
+          "enum": "NormalId",
+          "name": "Top"
+        },
+        "Lifetime": {
+          "$type": "NumberRange",
+          "max": 0.8,
+          "min": 0.4
+        },
+        "LightEmission": 1,
+        "LightInfluence": 0,
+        "Orientation": {
+          "$type": "EnumItem",
+          "enum": "ParticleOrientation",
+          "name": "VelocityParallel"
+        },
+        "Priority": 5,
+        "Rate": 60,
+        "Size": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0.12, 0], [1, 0.12, 0]]
+        },
+        "Speed": {
+          "$type": "NumberRange",
+          "max": 35,
+          "min": 20
+        },
+        "SpreadAngle": {
+          "$type": "Vector2",
+          "xy": [60, 60]
+        },
+        "Squash": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 1, 0], [1, 1, 0]]
+        },
+        "Texture": "rbxasset://textures/particles/fire_sparks_main.dds",
+        "Transparency": {
+          "$type": "NumberSequence",
+          "keypoints": [[0, 0, 0], [1, 1, 0]]
+        }
+      },
+      "Description": "Fast, short-lived sparks with gravity."
+    }
+  },
+  "QualityLevels": ["Low", "Medium", "High", "Ultra", "Custom"],
+  "RuntimeVersion": "1.0.0",
+  "Sections": [
+    {
+      "Name": "Quality",
+      "Description": "Quality level and performance budget overrides.",
+      "Fields": [
+        {
+          "Default": "High",
+          "Key": "Level",
+          "Kind": "string",
+          "Values": ["Low", "Medium", "High", "Ultra", "Custom"]
+        },
+        {
+          "Key": "ParticleRateScale",
+          "Kind": "number",
+          "Max": 4,
+          "Min": 0
+        },
+        {
+          "Key": "MaxParticleRate",
+          "Kind": "number",
+          "Min": 0,
+          "SoftMax": 20000
+        },
+        {
+          "Key": "MaxParticleSystems",
+          "Kind": "integer",
+          "Max": 128,
+          "Min": 0
+        },
+        {
+          "Key": "UpdateFrequency",
+          "Kind": "number",
+          "Max": 60,
+          "Min": 1
+        },
+        {
+          "Key": "TransitionFrequency",
+          "Kind": "number",
+          "Max": 60,
+          "Min": 1
+        },
+        {
+          "Key": "WeatherFrequency",
+          "Kind": "number",
+          "Max": 60,
+          "Min": 1
+        },
+        {
+          "Key": "ActivationDistance",
+          "Kind": "number",
+          "Min": 0
+        },
+        {
+          "Key": "SpatialCulling",
+          "Kind": "boolean"
+        },
+        {
+          "Key": "Pooling",
+          "Kind": "boolean"
+        },
+        {
+          "Fields": [
+            {
+              "Key": "Bloom",
+              "Kind": "boolean"
+            },
+            {
+              "Key": "ColorCorrection",
+              "Kind": "boolean"
+            },
+            {
+              "Key": "DepthOfField",
+              "Kind": "boolean"
+            },
+            {
+              "Key": "SunRays",
+              "Kind": "boolean"
+            },
+            {
+              "Key": "Blur",
+              "Kind": "boolean"
+            }
+          ],
+          "Key": "PostProcessing",
+          "Kind": "object"
+        }
+      ],
+      "Kind": "object",
+      "Order": 0
+    },
+    {
+      "Name": "Lighting",
+      "ClassName": "Lighting",
+      "Description": "Lighting service properties: time of day, brightness, ambient colors, shadows.",
+      "Fields": [
+        {
+          "Default": 14,
+          "Description": "Time of day in hours (0-24).",
+          "Key": "ClockTime",
+          "Kind": "number",
+          "Max": 24,
+          "Min": 0,
+          "Property": "ClockTime",
+          "Unit": "hours"
+        },
+        {
+          "Default": 2,
+          "Description": "Intensity of sun/moon light.",
+          "Key": "Brightness",
+          "Kind": "number",
+          "Max": 10,
+          "Min": 0,
+          "Property": "Brightness"
+        },
+        {
+          "Default": 0,
+          "Description": "Camera exposure offset in stops.",
+          "Key": "ExposureCompensation",
+          "Kind": "number",
+          "Max": 3,
+          "Min": -3,
+          "Property": "ExposureCompensation"
+        },
+        {
+          "Default": {
+            "$type": "Color3",
+            "rgb": [0, 0, 0]
+          },
+          "Description": "Ambient light in enclosed/indoor areas.",
+          "Key": "Ambient",
+          "Kind": "Color3",
+          "Property": "Ambient"
+        },
+        {
+          "Default": {
+            "$type": "Color3",
+            "rgb": [128, 128, 128]
+          },
+          "Description": "Ambient light outdoors.",
+          "Key": "OutdoorAmbient",
+          "Kind": "Color3",
+          "Property": "OutdoorAmbient"
+        },
+        {
+          "Aliases": ["ColorShift_Top"],
+          "Default": {
+            "$type": "Color3",
+            "rgb": [0, 0, 0]
+          },
+          "Description": "Tint of surfaces facing the sun.",
+          "Key": "ColorShiftTop",
+          "Kind": "Color3",
+          "Property": "ColorShift_Top"
+        },
+        {
+          "Aliases": ["ColorShift_Bottom"],
+          "Default": {
+            "$type": "Color3",
+            "rgb": [0, 0, 0]
+          },
+          "Description": "Tint of surfaces facing away from the sun.",
+          "Key": "ColorShiftBottom",
+          "Kind": "Color3",
+          "Property": "ColorShift_Bottom"
+        },
+        {
+          "Default": true,
+          "Description": "Enables sun/moon shadows.",
+          "Key": "GlobalShadows",
+          "Kind": "boolean",
+          "Property": "GlobalShadows"
+        },
+        {
+          "Default": 0.2,
+          "Description": "Shadow edge blur (ShadowMap/Future).",
+          "Key": "ShadowSoftness",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "ShadowSoftness"
+        },
+        {
+          "Default": 0,
+          "Description": "Ambient light derived from the sky.",
+          "Key": "EnvironmentDiffuseScale",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "EnvironmentDiffuseScale"
+        },
+        {
+          "Default": 0,
+          "Description": "Specular reflections derived from the sky (also affects water/metal).",
+          "Key": "EnvironmentSpecularScale",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "EnvironmentSpecularScale"
+        },
+        {
+          "Default": 41.733,
+          "Description": "Latitude used for sun/moon position.",
+          "Key": "GeographicLatitude",
+          "Kind": "number",
+          "Max": 90,
+          "Min": -90,
+          "Property": "GeographicLatitude"
+        },
+        {
+          "Default": {
+            "$type": "Color3",
+            "rgb": [192, 192, 192]
+          },
+          "Description": "Legacy fog color (ignored while an Atmosphere exists).",
+          "Key": "FogColor",
+          "Kind": "Color3",
+          "Property": "FogColor"
+        },
+        {
+          "Default": 0,
+          "Description": "Legacy fog start distance (ignored while an Atmosphere exists).",
+          "Key": "FogStart",
+          "Kind": "number",
+          "Min": 0,
+          "Property": "FogStart"
+        },
+        {
+          "Default": 100000,
+          "Description": "Legacy fog end distance (ignored while an Atmosphere exists).",
+          "Key": "FogEnd",
+          "Kind": "number",
+          "Min": 0,
+          "Property": "FogEnd"
+        },
+        {
+          "Description": "Lighting technology. Usually only writable from Studio; skipped with a warning elsewhere.",
+          "Enum": "Technology",
+          "EnumItems": ["Compatibility", "Future", "Legacy", "ShadowMap", "Unified", "Voxel"],
+          "Key": "Technology",
+          "Kind": "EnumItem",
+          "Property": "Technology"
+        }
+      ],
+      "Kind": "object",
+      "Order": 10
+    },
+    {
+      "Name": "Atmosphere",
+      "ClassName": "Atmosphere",
+      "Description": "Atmospheric scattering, distance fog and haze.",
+      "Fields": [
+        {
+          "Default": 0.395,
+          "Description": "How much light the air absorbs (distance fog).",
+          "Key": "Density",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "Density"
+        },
+        {
+          "Default": 0,
+          "Description": "Light transmission between camera and sky (horizon silhouette).",
+          "Key": "Offset",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "Offset"
+        },
+        {
+          "Default": {
+            "$type": "Color3",
+            "rgb": [199, 199, 199]
+          },
+          "Description": "Hue of the atmosphere.",
+          "Key": "Color",
+          "Kind": "Color3",
+          "Property": "Color"
+        },
+        {
+          "Default": {
+            "$type": "Color3",
+            "rgb": [106, 112, 125]
+          },
+          "Description": "Hue away from the sun.",
+          "Key": "Decay",
+          "Kind": "Color3",
+          "Property": "Decay"
+        },
+        {
+          "Default": 0,
+          "Description": "Glow around the sun.",
+          "Key": "Glare",
+          "Kind": "number",
+          "Max": 10,
+          "Min": 0,
+          "Property": "Glare"
+        },
+        {
+          "Default": 0,
+          "Description": "Haziness above the horizon.",
+          "Key": "Haze",
+          "Kind": "number",
+          "Max": 10,
+          "Min": 0,
+          "Property": "Haze"
+        }
+      ],
+      "Kind": "object",
+      "Order": 20
+    },
+    {
+      "Name": "Sky",
+      "ClassName": "Sky",
+      "Description": "Skybox, sun, moon and stars.",
+      "Fields": [
+        {
+          "Description": "Skybox back face texture (content id).",
+          "Key": "SkyboxBk",
+          "Kind": "string",
+          "Property": "SkyboxBk"
+        },
+        {
+          "Key": "SkyboxDn",
+          "Kind": "string",
+          "Property": "SkyboxDn"
+        },
+        {
+          "Key": "SkyboxFt",
+          "Kind": "string",
+          "Property": "SkyboxFt"
+        },
+        {
+          "Key": "SkyboxLf",
+          "Kind": "string",
+          "Property": "SkyboxLf"
+        },
+        {
+          "Key": "SkyboxRt",
+          "Kind": "string",
+          "Property": "SkyboxRt"
+        },
+        {
+          "Key": "SkyboxUp",
+          "Kind": "string",
+          "Property": "SkyboxUp"
+        },
+        {
+          "Key": "SunTextureId",
+          "Kind": "string",
+          "Property": "SunTextureId"
+        },
+        {
+          "Key": "MoonTextureId",
+          "Kind": "string",
+          "Property": "MoonTextureId"
+        },
+        {
+          "Default": 21,
+          "Key": "SunAngularSize",
+          "Kind": "number",
+          "Max": 60,
+          "Min": 0,
+          "Property": "SunAngularSize"
+        },
+        {
+          "Default": 11,
+          "Key": "MoonAngularSize",
+          "Kind": "number",
+          "Max": 60,
+          "Min": 0,
+          "Property": "MoonAngularSize"
+        },
+        {
+          "Default": 3000,
+          "Key": "StarCount",
+          "Kind": "number",
+          "Max": 5000,
+          "Min": 0,
+          "Property": "StarCount"
+        },
+        {
+          "Default": true,
+          "Key": "CelestialBodiesShown",
+          "Kind": "boolean",
+          "Property": "CelestialBodiesShown"
+        },
+        {
+          "Description": "Skybox rotation in degrees (newer engines only).",
+          "Key": "SkyboxOrientation",
+          "Kind": "Vector3",
+          "Property": "SkyboxOrientation"
+        }
+      ],
+      "Kind": "object",
+      "Order": 25
+    },
+    {
+      "Name": "Clouds",
+      "ClassName": "Clouds",
+      "Description": "Dynamic terrain clouds (Workspace.Terrain.Clouds).",
+      "Fields": [
+        {
+          "Default": true,
+          "Key": "Enabled",
+          "Kind": "boolean",
+          "Property": "Enabled"
+        },
+        {
+          "Default": 0.5,
+          "Description": "Fraction of the sky covered by clouds.",
+          "Key": "Cover",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "Cover"
+        },
+        {
+          "Default": 0.7,
+          "Description": "Cloud particle density (opacity).",
+          "Key": "Density",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "Density"
+        },
+        {
+          "Default": {
+            "$type": "Color3",
+            "rgb": [255, 255, 255]
+          },
+          "Key": "Color",
+          "Kind": "Color3",
+          "Property": "Color"
+        }
+      ],
+      "Kind": "object",
+      "Order": 30
+    },
+    {
+      "Name": "PostProcessing",
+      "Description": "Post-processing effects parented to Lighting.",
+      "Fields": [
+        {
+          "ClassName": "BloomEffect",
+          "Description": "Glow around bright areas.",
+          "Fields": [
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean",
+              "Property": "Enabled"
+            },
+            {
+              "Default": 1,
+              "Key": "Intensity",
+              "Kind": "number",
+              "Min": 0,
+              "Property": "Intensity",
+              "SoftMax": 3
+            },
+            {
+              "Default": 24,
+              "Key": "Size",
+              "Kind": "number",
+              "Max": 56,
+              "Min": 0,
+              "Property": "Size"
+            },
+            {
+              "Default": 2,
+              "Key": "Threshold",
+              "Kind": "number",
+              "Min": 0,
+              "Property": "Threshold",
+              "SoftMax": 4
+            }
+          ],
+          "Key": "Bloom",
+          "Kind": "object"
+        },
+        {
+          "ClassName": "ColorCorrectionEffect",
+          "Description": "Color grading.",
+          "Fields": [
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean",
+              "Property": "Enabled"
+            },
+            {
+              "Default": 0,
+              "Key": "Brightness",
+              "Kind": "number",
+              "Max": 1,
+              "Min": -1,
+              "Property": "Brightness"
+            },
+            {
+              "Default": 0,
+              "Key": "Contrast",
+              "Kind": "number",
+              "Max": 1,
+              "Min": -1,
+              "Property": "Contrast"
+            },
+            {
+              "Default": 0,
+              "Key": "Saturation",
+              "Kind": "number",
+              "Max": 1,
+              "Min": -1,
+              "Property": "Saturation"
+            },
+            {
+              "Default": {
+                "$type": "Color3",
+                "rgb": [255, 255, 255]
+              },
+              "Key": "TintColor",
+              "Kind": "Color3",
+              "Property": "TintColor"
+            }
+          ],
+          "Key": "ColorCorrection",
+          "Kind": "object"
+        },
+        {
+          "ClassName": "DepthOfFieldEffect",
+          "Description": "Distance blur.",
+          "Fields": [
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean",
+              "Property": "Enabled"
+            },
+            {
+              "Default": 0.75,
+              "Key": "FarIntensity",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "FarIntensity"
+            },
+            {
+              "Default": 0.05,
+              "Key": "FocusDistance",
+              "Kind": "number",
+              "Max": 200,
+              "Min": 0,
+              "Property": "FocusDistance"
+            },
+            {
+              "Default": 10,
+              "Key": "InFocusRadius",
+              "Kind": "number",
+              "Max": 50,
+              "Min": 0,
+              "Property": "InFocusRadius"
+            },
+            {
+              "Default": 0.75,
+              "Key": "NearIntensity",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "NearIntensity"
+            }
+          ],
+          "Key": "DepthOfField",
+          "Kind": "object"
+        },
+        {
+          "ClassName": "SunRaysEffect",
+          "Description": "God rays from the sun.",
+          "Fields": [
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean",
+              "Property": "Enabled"
+            },
+            {
+              "Default": 0.25,
+              "Key": "Intensity",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "Intensity"
+            },
+            {
+              "Default": 1,
+              "Key": "Spread",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "Spread"
+            }
+          ],
+          "Key": "SunRays",
+          "Kind": "object"
+        },
+        {
+          "ClassName": "BlurEffect",
+          "Description": "Full-screen blur.",
+          "Fields": [
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean",
+              "Property": "Enabled"
+            },
+            {
+              "Default": 24,
+              "Key": "Size",
+              "Kind": "number",
+              "Max": 56,
+              "Min": 0,
+              "Property": "Size"
+            }
+          ],
+          "Key": "Blur",
+          "Kind": "object"
+        }
+      ],
+      "Kind": "object",
+      "Order": 40
+    },
+    {
+      "Name": "Water",
+      "ClassName": "Terrain",
+      "Description": "Terrain water appearance and the underwater look.",
+      "Fields": [
+        {
+          "Aliases": ["WaterColor"],
+          "Default": {
+            "$type": "Color3",
+            "rgb": [12, 84, 92]
+          },
+          "Description": "Water tint.",
+          "Key": "Color",
+          "Kind": "Color3",
+          "Property": "WaterColor"
+        },
+        {
+          "Aliases": ["WaterTransparency"],
+          "Default": 0.3,
+          "Description": "0 = opaque, 1 = fully clear.",
+          "Key": "Transparency",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "WaterTransparency"
+        },
+        {
+          "Aliases": ["WaterReflectance"],
+          "Default": 1,
+          "Description": "Strength of sky reflections.",
+          "Key": "Reflectance",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "WaterReflectance"
+        },
+        {
+          "Aliases": ["WaveStrength", "WaterWaveSize"],
+          "Default": 0.15,
+          "Description": "Wave height.",
+          "Key": "WaveSize",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "WaterWaveSize"
+        },
+        {
+          "Aliases": ["WaterWaveSpeed"],
+          "Default": 10,
+          "Description": "Wave animation speed.",
+          "Key": "WaveSpeed",
+          "Kind": "number",
+          "Max": 100,
+          "Min": 0,
+          "Property": "WaterWaveSpeed"
+        },
+        {
+          "Description": "Client-side underwater look (approximation using ColorCorrectionEffect/BlurEffect).",
+          "Fields": [
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean"
+            },
+            {
+              "Default": {
+                "$type": "Color3",
+                "rgb": [120, 190, 210]
+              },
+              "Key": "TintColor",
+              "Kind": "Color3"
+            },
+            {
+              "Default": -0.05,
+              "Key": "Brightness",
+              "Kind": "number",
+              "Max": 1,
+              "Min": -1
+            },
+            {
+              "Default": 0.05,
+              "Key": "Contrast",
+              "Kind": "number",
+              "Max": 1,
+              "Min": -1
+            },
+            {
+              "Default": -0.1,
+              "Key": "Saturation",
+              "Kind": "number",
+              "Max": 1,
+              "Min": -1
+            },
+            {
+              "Default": 4,
+              "Key": "BlurSize",
+              "Kind": "number",
+              "Max": 56,
+              "Min": 0
+            }
+          ],
+          "Key": "Underwater",
+          "Kind": "object"
+        }
+      ],
+      "Kind": "object",
+      "Order": 50
+    },
+    {
+      "Name": "Particles",
+      "ClassName": "ParticleEmitter",
+      "Description": "Named particle systems. Keys are system names; values are template overrides.",
+      "ItemFields": [
+        {
+          "Description": "Particle template providing defaults (Rain, Snow, ...).",
+          "Key": "Template",
+          "Kind": "string"
+        },
+        {
+          "Description": "Follow the local camera or stay at Position.",
+          "Key": "Attach",
+          "Kind": "string",
+          "Values": ["Camera", "World"]
+        },
+        {
+          "Description": "World position of the emission volume (World attach, or server fallback).",
+          "Key": "Position",
+          "Kind": "Vector3"
+        },
+        {
+          "Description": "Size of the emission volume in studs.",
+          "Key": "Area",
+          "Kind": "Vector3",
+          "Min": 0
+        },
+        {
+          "Description": "Offset from the camera when Attach = Camera.",
+          "Key": "Offset",
+          "Kind": "Vector3"
+        },
+        {
+          "Description": "Higher priority systems keep their budget first when quality limits apply.",
+          "Key": "Priority",
+          "Kind": "number"
+        },
+        {
+          "Description": "Disable when the camera is farther than this (World attach). Defaults to the quality profile.",
+          "Key": "CullDistance",
+          "Kind": "number",
+          "Min": 0
+        },
+        {
+          "Default": true,
+          "Key": "Enabled",
+          "Kind": "boolean",
+          "Property": "Enabled"
+        },
+        {
+          "Aliases": ["EmissionRate"],
+          "Description": "Particles emitted per second (before quality scaling).",
+          "Key": "Rate",
+          "Kind": "number",
+          "Min": 0,
+          "Property": "Rate",
+          "SoftMax": 2000
+        },
+        {
+          "Key": "Lifetime",
+          "Kind": "NumberRange",
+          "Min": 0,
+          "Property": "Lifetime",
+          "SoftMax": 30
+        },
+        {
+          "Key": "Speed",
+          "Kind": "NumberRange",
+          "Property": "Speed"
+        },
+        {
+          "Key": "Size",
+          "Kind": "NumberSequence",
+          "Min": 0,
+          "Property": "Size"
+        },
+        {
+          "Key": "Color",
+          "Kind": "ColorSequence",
+          "Property": "Color"
+        },
+        {
+          "Key": "Transparency",
+          "Kind": "NumberSequence",
+          "Max": 1,
+          "Min": 0,
+          "Property": "Transparency"
+        },
+        {
+          "Key": "Rotation",
+          "Kind": "NumberRange",
+          "Property": "Rotation"
+        },
+        {
+          "Key": "RotSpeed",
+          "Kind": "NumberRange",
+          "Property": "RotSpeed"
+        },
+        {
+          "Key": "Drag",
+          "Kind": "number",
+          "Property": "Drag"
+        },
+        {
+          "Key": "Acceleration",
+          "Kind": "Vector3",
+          "Property": "Acceleration"
+        },
+        {
+          "Key": "SpreadAngle",
+          "Kind": "Vector2",
+          "Property": "SpreadAngle"
+        },
+        {
+          "Key": "Texture",
+          "Kind": "string",
+          "Property": "Texture"
+        },
+        {
+          "Key": "LightEmission",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "LightEmission"
+        },
+        {
+          "Key": "LightInfluence",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "LightInfluence"
+        },
+        {
+          "Key": "Brightness",
+          "Kind": "number",
+          "Min": 0,
+          "Property": "Brightness",
+          "SoftMax": 10
+        },
+        {
+          "Enum": "ParticleEmitterShape",
+          "EnumItems": ["Box", "Cylinder", "Disc", "Sphere"],
+          "Key": "Shape",
+          "Kind": "EnumItem",
+          "Property": "Shape"
+        },
+        {
+          "Enum": "ParticleEmitterShapeStyle",
+          "EnumItems": ["Surface", "Volume"],
+          "Key": "ShapeStyle",
+          "Kind": "EnumItem",
+          "Property": "ShapeStyle"
+        },
+        {
+          "Enum": "ParticleEmitterShapeInOut",
+          "EnumItems": ["InAndOut", "Inward", "Outward"],
+          "Key": "ShapeInOut",
+          "Kind": "EnumItem",
+          "Property": "ShapeInOut"
+        },
+        {
+          "Key": "ShapePartial",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "ShapePartial"
+        },
+        {
+          "Enum": "ParticleOrientation",
+          "EnumItems": ["FacingCamera", "FacingCameraWorldUp", "VelocityParallel", "VelocityPerpendicular"],
+          "Key": "Orientation",
+          "Kind": "EnumItem",
+          "Property": "Orientation"
+        },
+        {
+          "Enum": "NormalId",
+          "EnumItems": ["Back", "Bottom", "Front", "Left", "Right", "Top"],
+          "Key": "EmissionDirection",
+          "Kind": "EnumItem",
+          "Property": "EmissionDirection"
+        },
+        {
+          "Key": "ZOffset",
+          "Kind": "number",
+          "Property": "ZOffset"
+        },
+        {
+          "Key": "LockedToPart",
+          "Kind": "boolean",
+          "Property": "LockedToPart"
+        },
+        {
+          "Key": "VelocityInheritance",
+          "Kind": "number",
+          "Property": "VelocityInheritance"
+        },
+        {
+          "Key": "WindAffectsDrag",
+          "Kind": "boolean",
+          "Property": "WindAffectsDrag"
+        },
+        {
+          "Key": "Squash",
+          "Kind": "NumberSequence",
+          "Max": 3,
+          "Min": -3,
+          "Property": "Squash"
+        },
+        {
+          "Key": "TimeScale",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0,
+          "Property": "TimeScale"
+        }
+      ],
+      "Kind": "map",
+      "Order": 60
+    },
+    {
+      "Name": "Weather",
+      "Description": "High-level weather composed of atmosphere, lighting, clouds, particles, wind, fog, lightning and audio hooks.",
+      "Fields": [
+        {
+          "Description": "Weather type (see Weather.Types).",
+          "Key": "Type",
+          "Kind": "string",
+          "Required": true
+        },
+        {
+          "Description": "0 = no influence, 1 = full weather.",
+          "Key": "Intensity",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0
+        },
+        {
+          "Description": "Wind speed in studs/second (Workspace.GlobalWind).",
+          "Key": "Wind",
+          "Kind": "number",
+          "Min": 0,
+          "SoftMax": 150
+        },
+        {
+          "Description": "Wind direction (normalized; Y is ignored).",
+          "Key": "WindDirection",
+          "Kind": "Vector3"
+        },
+        {
+          "Description": "Extra fog on top of the weather type.",
+          "Key": "Fog",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0
+        },
+        {
+          "Description": "Enable lightning flashes.",
+          "Key": "Lightning",
+          "Kind": "boolean"
+        },
+        {
+          "Description": "Average strikes per minute.",
+          "Key": "LightningFrequency",
+          "Kind": "number",
+          "Max": 60,
+          "Min": 0
+        },
+        {
+          "Description": "Overrides Intensity for the Rain component.",
+          "Key": "RainIntensity",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0
+        },
+        {
+          "Description": "Overrides Intensity for the Snow component.",
+          "Key": "SnowIntensity",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0
+        },
+        {
+          "Description": "Overrides Intensity for Dust/Sand/Debris components.",
+          "Key": "DustIntensity",
+          "Kind": "number",
+          "Max": 1,
+          "Min": 0
+        },
+        {
+          "Description": "Where weather particles are emitted.",
+          "Key": "Attach",
+          "Kind": "string",
+          "Values": ["Camera", "World"]
+        },
+        {
+          "Description": "Center of weather particles when Attach = World.",
+          "Key": "Position",
+          "Kind": "Vector3"
+        },
+        {
+          "Description": "Emission volume size for weather particles.",
+          "Key": "Area",
+          "Kind": "Vector3",
+          "Min": 0
+        },
+        {
+          "Description": "Seed for deterministic lightning timing.",
+          "Key": "Seed",
+          "Kind": "integer"
+        },
+        {
+          "Description": "Per-component particle overrides or extra components.",
+          "ItemFields": [
+            {
+              "Description": "Particle template providing defaults (Rain, Snow, ...).",
+              "Key": "Template",
+              "Kind": "string"
+            },
+            {
+              "Description": "Follow the local camera or stay at Position.",
+              "Key": "Attach",
+              "Kind": "string",
+              "Values": ["Camera", "World"]
+            },
+            {
+              "Description": "World position of the emission volume (World attach, or server fallback).",
+              "Key": "Position",
+              "Kind": "Vector3"
+            },
+            {
+              "Description": "Size of the emission volume in studs.",
+              "Key": "Area",
+              "Kind": "Vector3",
+              "Min": 0
+            },
+            {
+              "Description": "Offset from the camera when Attach = Camera.",
+              "Key": "Offset",
+              "Kind": "Vector3"
+            },
+            {
+              "Description": "Higher priority systems keep their budget first when quality limits apply.",
+              "Key": "Priority",
+              "Kind": "number"
+            },
+            {
+              "Description": "Disable when the camera is farther than this (World attach). Defaults to the quality profile.",
+              "Key": "CullDistance",
+              "Kind": "number",
+              "Min": 0
+            },
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean",
+              "Property": "Enabled"
+            },
+            {
+              "Aliases": ["EmissionRate"],
+              "Description": "Particles emitted per second (before quality scaling).",
+              "Key": "Rate",
+              "Kind": "number",
+              "Min": 0,
+              "Property": "Rate",
+              "SoftMax": 2000
+            },
+            {
+              "Key": "Lifetime",
+              "Kind": "NumberRange",
+              "Min": 0,
+              "Property": "Lifetime",
+              "SoftMax": 30
+            },
+            {
+              "Key": "Speed",
+              "Kind": "NumberRange",
+              "Property": "Speed"
+            },
+            {
+              "Key": "Size",
+              "Kind": "NumberSequence",
+              "Min": 0,
+              "Property": "Size"
+            },
+            {
+              "Key": "Color",
+              "Kind": "ColorSequence",
+              "Property": "Color"
+            },
+            {
+              "Key": "Transparency",
+              "Kind": "NumberSequence",
+              "Max": 1,
+              "Min": 0,
+              "Property": "Transparency"
+            },
+            {
+              "Key": "Rotation",
+              "Kind": "NumberRange",
+              "Property": "Rotation"
+            },
+            {
+              "Key": "RotSpeed",
+              "Kind": "NumberRange",
+              "Property": "RotSpeed"
+            },
+            {
+              "Key": "Drag",
+              "Kind": "number",
+              "Property": "Drag"
+            },
+            {
+              "Key": "Acceleration",
+              "Kind": "Vector3",
+              "Property": "Acceleration"
+            },
+            {
+              "Key": "SpreadAngle",
+              "Kind": "Vector2",
+              "Property": "SpreadAngle"
+            },
+            {
+              "Key": "Texture",
+              "Kind": "string",
+              "Property": "Texture"
+            },
+            {
+              "Key": "LightEmission",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "LightEmission"
+            },
+            {
+              "Key": "LightInfluence",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "LightInfluence"
+            },
+            {
+              "Key": "Brightness",
+              "Kind": "number",
+              "Min": 0,
+              "Property": "Brightness",
+              "SoftMax": 10
+            },
+            {
+              "Enum": "ParticleEmitterShape",
+              "EnumItems": ["Box", "Cylinder", "Disc", "Sphere"],
+              "Key": "Shape",
+              "Kind": "EnumItem",
+              "Property": "Shape"
+            },
+            {
+              "Enum": "ParticleEmitterShapeStyle",
+              "EnumItems": ["Surface", "Volume"],
+              "Key": "ShapeStyle",
+              "Kind": "EnumItem",
+              "Property": "ShapeStyle"
+            },
+            {
+              "Enum": "ParticleEmitterShapeInOut",
+              "EnumItems": ["InAndOut", "Inward", "Outward"],
+              "Key": "ShapeInOut",
+              "Kind": "EnumItem",
+              "Property": "ShapeInOut"
+            },
+            {
+              "Key": "ShapePartial",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "ShapePartial"
+            },
+            {
+              "Enum": "ParticleOrientation",
+              "EnumItems": ["FacingCamera", "FacingCameraWorldUp", "VelocityParallel", "VelocityPerpendicular"],
+              "Key": "Orientation",
+              "Kind": "EnumItem",
+              "Property": "Orientation"
+            },
+            {
+              "Enum": "NormalId",
+              "EnumItems": ["Back", "Bottom", "Front", "Left", "Right", "Top"],
+              "Key": "EmissionDirection",
+              "Kind": "EnumItem",
+              "Property": "EmissionDirection"
+            },
+            {
+              "Key": "ZOffset",
+              "Kind": "number",
+              "Property": "ZOffset"
+            },
+            {
+              "Key": "LockedToPart",
+              "Kind": "boolean",
+              "Property": "LockedToPart"
+            },
+            {
+              "Key": "VelocityInheritance",
+              "Kind": "number",
+              "Property": "VelocityInheritance"
+            },
+            {
+              "Key": "WindAffectsDrag",
+              "Kind": "boolean",
+              "Property": "WindAffectsDrag"
+            },
+            {
+              "Key": "Squash",
+              "Kind": "NumberSequence",
+              "Max": 3,
+              "Min": -3,
+              "Property": "Squash"
+            },
+            {
+              "Key": "TimeScale",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0,
+              "Property": "TimeScale"
+            }
+          ],
+          "Key": "Particles",
+          "Kind": "map"
+        }
+      ],
+      "Kind": "object",
+      "Order": 70
+    },
+    {
+      "Name": "Environment",
+      "Description": "Wind, day/night cycle and spatial effect zones.",
+      "Fields": [
+        {
+          "Description": "Global wind (Workspace.GlobalWind).",
+          "Fields": [
+            {
+              "Default": {
+                "$type": "Vector3",
+                "xyz": [1, 0, 0]
+              },
+              "Key": "Direction",
+              "Kind": "Vector3"
+            },
+            {
+              "Default": 0,
+              "Key": "Speed",
+              "Kind": "number",
+              "Min": 0,
+              "SoftMax": 150
+            }
+          ],
+          "Key": "Wind",
+          "Kind": "object"
+        },
+        {
+          "Description": "Day/night cycle (runtime).",
+          "Fields": [
+            {
+              "Default": false,
+              "Key": "Enabled",
+              "Kind": "boolean"
+            },
+            {
+              "Default": 12,
+              "Description": "Real-time minutes per 24 in-game hours.",
+              "Key": "DayLength",
+              "Kind": "number",
+              "Min": 0.1,
+              "SoftMax": 240
+            },
+            {
+              "Description": "ClockTime when the cycle starts.",
+              "Key": "StartTime",
+              "Kind": "number",
+              "Max": 24,
+              "Min": 0
+            },
+            {
+              "Default": false,
+              "Key": "Paused",
+              "Kind": "boolean"
+            },
+            {
+              "Default": false,
+              "Description": "Interpolate brightness/ambient/atmosphere colors through built-in sunrise/sunset keyframes.",
+              "Key": "DriveLighting",
+              "Kind": "boolean"
+            }
+          ],
+          "Key": "DayNight",
+          "Kind": "object"
+        },
+        {
+          "Description": "Spatial effect zones keyed by name.",
+          "ItemFields": [
+            {
+              "Description": "Particle template for the zone (Fog, Mist, Dust, Leaves, Fireflies, Rain, Snow, ...).",
+              "Key": "Effect",
+              "Kind": "string",
+              "Required": true
+            },
+            {
+              "Default": true,
+              "Key": "Enabled",
+              "Kind": "boolean"
+            },
+            {
+              "Description": "Zone center.",
+              "Key": "Position",
+              "Kind": "Vector3",
+              "Required": true
+            },
+            {
+              "Description": "Zone box size in studs.",
+              "Key": "Size",
+              "Kind": "Vector3",
+              "Min": 0,
+              "Required": true
+            },
+            {
+              "Default": 0.5,
+              "Key": "Intensity",
+              "Kind": "number",
+              "Max": 1,
+              "Min": 0
+            },
+            {
+              "Description": "Disable the zone beyond this camera distance (defaults to the quality profile).",
+              "Key": "CullDistance",
+              "Kind": "number",
+              "Min": 0
+            },
+            {
+              "Default": 40,
+              "Description": "Distance over which Atmosphere overrides fade in around the zone.",
+              "Key": "BlendDistance",
+              "Kind": "number",
+              "Min": 0
+            },
+            {
+              "Description": "Atmosphere values blended in while the camera is inside.",
+              "Fields": [
+                {
+                  "Default": 0.395,
+                  "Description": "How much light the air absorbs (distance fog).",
+                  "Key": "Density",
+                  "Kind": "number",
+                  "Max": 1,
+                  "Min": 0,
+                  "Property": "Density"
+                },
+                {
+                  "Default": 0,
+                  "Description": "Light transmission between camera and sky (horizon silhouette).",
+                  "Key": "Offset",
+                  "Kind": "number",
+                  "Max": 1,
+                  "Min": 0,
+                  "Property": "Offset"
+                },
+                {
+                  "Default": {
+                    "$type": "Color3",
+                    "rgb": [199, 199, 199]
+                  },
+                  "Description": "Hue of the atmosphere.",
+                  "Key": "Color",
+                  "Kind": "Color3",
+                  "Property": "Color"
+                },
+                {
+                  "Default": {
+                    "$type": "Color3",
+                    "rgb": [106, 112, 125]
+                  },
+                  "Description": "Hue away from the sun.",
+                  "Key": "Decay",
+                  "Kind": "Color3",
+                  "Property": "Decay"
+                },
+                {
+                  "Default": 0,
+                  "Description": "Glow around the sun.",
+                  "Key": "Glare",
+                  "Kind": "number",
+                  "Max": 10,
+                  "Min": 0,
+                  "Property": "Glare"
+                },
+                {
+                  "Default": 0,
+                  "Description": "Haziness above the horizon.",
+                  "Key": "Haze",
+                  "Kind": "number",
+                  "Max": 10,
+                  "Min": 0,
+                  "Property": "Haze"
+                }
+              ],
+              "Key": "Atmosphere",
+              "Kind": "object"
+            },
+            {
+              "Description": "ParticleEmitter overrides for the zone's emitter.",
+              "Fields": [
+                {
+                  "Default": true,
+                  "Key": "Enabled",
+                  "Kind": "boolean",
+                  "Property": "Enabled"
+                },
+                {
+                  "Aliases": ["EmissionRate"],
+                  "Description": "Particles emitted per second (before quality scaling).",
+                  "Key": "Rate",
+                  "Kind": "number",
+                  "Min": 0,
+                  "Property": "Rate",
+                  "SoftMax": 2000
+                },
+                {
+                  "Key": "Lifetime",
+                  "Kind": "NumberRange",
+                  "Min": 0,
+                  "Property": "Lifetime",
+                  "SoftMax": 30
+                },
+                {
+                  "Key": "Speed",
+                  "Kind": "NumberRange",
+                  "Property": "Speed"
+                },
+                {
+                  "Key": "Size",
+                  "Kind": "NumberSequence",
+                  "Min": 0,
+                  "Property": "Size"
+                },
+                {
+                  "Key": "Color",
+                  "Kind": "ColorSequence",
+                  "Property": "Color"
+                },
+                {
+                  "Key": "Transparency",
+                  "Kind": "NumberSequence",
+                  "Max": 1,
+                  "Min": 0,
+                  "Property": "Transparency"
+                },
+                {
+                  "Key": "Rotation",
+                  "Kind": "NumberRange",
+                  "Property": "Rotation"
+                },
+                {
+                  "Key": "RotSpeed",
+                  "Kind": "NumberRange",
+                  "Property": "RotSpeed"
+                },
+                {
+                  "Key": "Drag",
+                  "Kind": "number",
+                  "Property": "Drag"
+                },
+                {
+                  "Key": "Acceleration",
+                  "Kind": "Vector3",
+                  "Property": "Acceleration"
+                },
+                {
+                  "Key": "SpreadAngle",
+                  "Kind": "Vector2",
+                  "Property": "SpreadAngle"
+                },
+                {
+                  "Key": "Texture",
+                  "Kind": "string",
+                  "Property": "Texture"
+                },
+                {
+                  "Key": "LightEmission",
+                  "Kind": "number",
+                  "Max": 1,
+                  "Min": 0,
+                  "Property": "LightEmission"
+                },
+                {
+                  "Key": "LightInfluence",
+                  "Kind": "number",
+                  "Max": 1,
+                  "Min": 0,
+                  "Property": "LightInfluence"
+                },
+                {
+                  "Key": "Brightness",
+                  "Kind": "number",
+                  "Min": 0,
+                  "Property": "Brightness",
+                  "SoftMax": 10
+                },
+                {
+                  "Enum": "ParticleEmitterShape",
+                  "EnumItems": ["Box", "Cylinder", "Disc", "Sphere"],
+                  "Key": "Shape",
+                  "Kind": "EnumItem",
+                  "Property": "Shape"
+                },
+                {
+                  "Enum": "ParticleEmitterShapeStyle",
+                  "EnumItems": ["Surface", "Volume"],
+                  "Key": "ShapeStyle",
+                  "Kind": "EnumItem",
+                  "Property": "ShapeStyle"
+                },
+                {
+                  "Enum": "ParticleEmitterShapeInOut",
+                  "EnumItems": ["InAndOut", "Inward", "Outward"],
+                  "Key": "ShapeInOut",
+                  "Kind": "EnumItem",
+                  "Property": "ShapeInOut"
+                },
+                {
+                  "Key": "ShapePartial",
+                  "Kind": "number",
+                  "Max": 1,
+                  "Min": 0,
+                  "Property": "ShapePartial"
+                },
+                {
+                  "Enum": "ParticleOrientation",
+                  "EnumItems": ["FacingCamera", "FacingCameraWorldUp", "VelocityParallel", "VelocityPerpendicular"],
+                  "Key": "Orientation",
+                  "Kind": "EnumItem",
+                  "Property": "Orientation"
+                },
+                {
+                  "Enum": "NormalId",
+                  "EnumItems": ["Back", "Bottom", "Front", "Left", "Right", "Top"],
+                  "Key": "EmissionDirection",
+                  "Kind": "EnumItem",
+                  "Property": "EmissionDirection"
+                },
+                {
+                  "Key": "ZOffset",
+                  "Kind": "number",
+                  "Property": "ZOffset"
+                },
+                {
+                  "Key": "LockedToPart",
+                  "Kind": "boolean",
+                  "Property": "LockedToPart"
+                },
+                {
+                  "Key": "VelocityInheritance",
+                  "Kind": "number",
+                  "Property": "VelocityInheritance"
+                },
+                {
+                  "Key": "WindAffectsDrag",
+                  "Kind": "boolean",
+                  "Property": "WindAffectsDrag"
+                },
+                {
+                  "Key": "Squash",
+                  "Kind": "NumberSequence",
+                  "Max": 3,
+                  "Min": -3,
+                  "Property": "Squash"
+                },
+                {
+                  "Key": "TimeScale",
+                  "Kind": "number",
+                  "Max": 1,
+                  "Min": 0,
+                  "Property": "TimeScale"
+                }
+              ],
+              "Key": "Overrides",
+              "Kind": "object"
+            }
+          ],
+          "Key": "Zones",
+          "Kind": "map"
+        }
+      ],
+      "Kind": "object",
+      "Order": 80
+    },
+    {
+      "Name": "Effects",
+      "Description": "Instances of custom effect types registered with VisualFX:RegisterEffect.",
+      "ItemFields": [
+        {
+          "Description": "Registered effect name (defaults to the entry key).",
+          "Key": "Effect",
+          "Kind": "string"
+        },
+        {
+          "Default": true,
+          "Key": "Enabled",
+          "Kind": "boolean"
+        }
+      ],
+      "Kind": "map",
+      "Order": 90
+    }
+  ],
+  "ValueEncodings": {
+    "Color3": {
+      "Shorthand": ["#BECDDC", "[190, 205, 220]"],
+      "Tagged": {
+        "$type": "Color3",
+        "rgb": [190, 205, 220]
+      }
+    },
+    "ColorSequence": {
+      "Shorthand": ["#FFFFFF", "[[255,255,255],[0,0,0]]"],
+      "Tagged": {
+        "$type": "ColorSequence",
+        "keypoints": [[0, 255, 255, 255], [1, 0, 0, 0]]
+      }
+    },
+    "EnumItem": {
+      "Shorthand": ["\"Top\""],
+      "Tagged": {
+        "$type": "EnumItem",
+        "enum": "NormalId",
+        "name": "Top"
+      }
+    },
+    "NumberRange": {
+      "Shorthand": ["1.5", "[1, 2]"],
+      "Tagged": {
+        "$type": "NumberRange",
+        "max": 2,
+        "min": 1
+      }
+    },
+    "NumberSequence": {
+      "Shorthand": ["0.2", "[0.1, 0.3]"],
+      "Tagged": {
+        "$type": "NumberSequence",
+        "keypoints": [[0, 0.1, 0], [1, 0.3, 0]]
+      }
+    },
+    "Vector2": {
+      "Shorthand": ["[3, 3]"],
+      "Tagged": {
+        "$type": "Vector2",
+        "xy": [3, 3]
+      }
+    },
+    "Vector3": {
+      "Shorthand": ["[0, 30, 0]"],
+      "Tagged": {
+        "$type": "Vector3",
+        "xyz": [0, 30, 0]
+      }
+    }
+  },
+  "WeatherTypes": {
+    "Autumn": {
+      "Category": "Seasonal",
+      "Composition": ["Lighting", "Atmosphere", "PostProcessing", "Leaves", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.1,
+        "Intensity": 0.6,
+        "Wind": 10
+      },
+      "Description": "Warm autumn light with falling leaves."
+    },
+    "Blizzard": {
+      "Category": "Snow",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Snow", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.7,
+        "Intensity": 0.9,
+        "Wind": 45
+      },
+      "Description": "Violent snowstorm with near-zero visibility."
+    },
+    "Clear": {
+      "Category": "Fair",
+      "Composition": ["Atmosphere", "Clouds", "Wind", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0,
+        "Intensity": 1,
+        "Wind": 4
+      },
+      "Description": "Clear skies, crisp air."
+    },
+    "Cloudy": {
+      "Category": "Fair",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "Wind", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0,
+        "Intensity": 0.6,
+        "Wind": 8
+      },
+      "Description": "Partly cloudy."
+    },
+    "Custom": {
+      "Category": "Custom",
+      "Composition": {},
+      "Defaults": {
+        "Fog": 0,
+        "Intensity": 1,
+        "Wind": 0
+      },
+      "Description": "No built-in influence; compose it with Weather.Particles and the other Weather fields."
+    },
+    "DustStorm": {
+      "Category": "Dust",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Dust", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.5,
+        "Intensity": 0.7,
+        "Wind": 30
+      },
+      "Description": "Brown haze with blowing dust."
+    },
+    "Fog": {
+      "Category": "Fog",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Fog", "Wind", "Fog"],
+      "Defaults": {
+        "Fog": 0.8,
+        "Intensity": 0.7,
+        "Wind": 2
+      },
+      "Description": "Dense, still fog."
+    },
+    "HeavyRain": {
+      "Category": "Rain",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Rain", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.35,
+        "Intensity": 0.8,
+        "Wind": 20
+      },
+      "Description": "Heavy downpour with low visibility."
+    },
+    "LightRain": {
+      "Category": "Rain",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Rain", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.2,
+        "Intensity": 0.45,
+        "Wind": 8
+      },
+      "Description": "Light, steady rain."
+    },
+    "MagicalStorm": {
+      "Category": "Fantasy",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Magic", "Wind", "Fog", "Lightning", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.4,
+        "Intensity": 0.8,
+        "Lightning": true,
+        "Wind": 25
+      },
+      "Description": "Otherworldly storm with glowing particles and violet lightning."
+    },
+    "Overcast": {
+      "Category": "Fair",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.15,
+        "Intensity": 0.8,
+        "Wind": 10
+      },
+      "Description": "Fully overcast, flat grey light."
+    },
+    "Sandstorm": {
+      "Category": "Dust",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Sand", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.75,
+        "Intensity": 0.85,
+        "Wind": 50
+      },
+      "Description": "Thick orange sandstorm."
+    },
+    "Snow": {
+      "Category": "Snow",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Snow", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.25,
+        "Intensity": 0.6,
+        "Wind": 6
+      },
+      "Description": "Gentle snowfall."
+    },
+    "Thunderstorm": {
+      "Category": "Rain",
+      "Composition": ["Lighting", "Atmosphere", "Clouds", "PostProcessing", "Rain", "Wind", "Fog", "Lightning", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.4,
+        "Intensity": 0.9,
+        "Lightning": true,
+        "Wind": 30
+      },
+      "Description": "Dark storm with heavy rain, wind and lightning."
+    },
+    "Windy": {
+      "Category": "Fair",
+      "Composition": ["Atmosphere", "Clouds", "Debris", "Wind", "Fog", "AmbientAudioHooks"],
+      "Defaults": {
+        "Fog": 0.05,
+        "Intensity": 0.6,
+        "Wind": 40
+      },
+      "Description": "Strong wind with drifting debris."
+    }
+  }
+}

@@ -1,229 +1,163 @@
-# Next.js Toolbox Template
+# VisualFX Studio
 
-![Netlify + Next](https://user-images.githubusercontent.com/43764894/223561089-2b729a3d-2963-4fc1-ad9b-a8618cd3c87e.png)
+An AI-native visual-effects framework for Roblox: a runtime Luau library and a
+Studio plugin for building, inspecting, previewing, serializing and reproducing
+lighting, atmosphere, sky, clouds, post-processing, water, particles, weather
+and spatial environment effects.
 
-This is a [Next.js](https://nextjs.org/) v14 project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app). It is a reference on how to integrate commonly used features within Netlify for Next.js.
+Humans work in the Studio plugin. AI agents work through a structured command
+API. Both produce the same deterministic, versioned configuration data, which
+can be turned into Luau code and applied in a published game.
 
-## Table of Contents:
+```lua
+local VisualFX = require(game:GetService("ReplicatedStorage").VisualFX)
 
-- [Getting Started](#getting-started)
-- [Deploy to Netlify](#deploy-to-netlify)
-  - [Deploy using the Netlify CLI](#deploy-using-the-netlify-cli)
-  - [Running Locally](#running-locally)
-- [Forms](#forms)
-  - [Adding a Custom Submission Page](#adding-a-custom-submission-page)
-  - [Blocking Bot Spam with a Honeypot Field](#blocking-bot-spam-with-a-honeypot-field)
-  - [Forms Resources](#forms-resources)
-- [Netlify Functions](#netlify-functions)
-  - [Functions Resources](#functions-resources)
-- [Redirects](#redirects)
-  - [Redirect Resources](#redirect-resources)
-- [Next.js Toolbox Template Video Walkthrough](#nextjs-toolbox-template-video-walkthrough)
-- [Testing](#testing)
-  - [Included Default Testing](#included-default-testing)
-  - [Removing Renovate](#removing-renovate)
-  - [Removing Cypress](#removing-cypress)
+VisualFX:ApplyPreset("CinematicSunset")
 
-## Getting Started
+VisualFX:CreateScene({
+    Mood = "mysterious",
+    Time = "sunset",
+    Weather = "light_rain",
+    Environment = "dense_forest",
+    Fog = "medium",
+    LightingStyle = "cinematic",
+})
 
-After installing the dependencies with `npm install` or `yarn install`, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
+VisualFX:TransitionTo({
+    Duration = 8,
+    Configuration = { Weather = { Type = "HeavyRain", Intensity = 0.9 }, Lighting = { ClockTime = 19.2 } },
+})
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## What's in the box
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+| Area | Location | Highlights |
+| --- | --- | --- |
+| Core | `Core/` | Registry, canonical config + merge rules + schema migration, validator, deterministic JSON serialization, compatibility detection, managed-identity instance manager with preview journal, events |
+| Runtime | `Runtime/` | Lighting + post-processing, Atmosphere/Sky/Clouds, Water (+ underwater approximation), particle framework with 12 templates, composable weather (15 types), environment (wind, day/night, spatial zones), transitions, quality budgets, cleanup, reconciler |
+| AI | `AI/` | `Execute` command API (35+ actions, batches, dry runs), scene inspector, Visual Director, machine-readable schema, runtime agent guide |
+| Presets | `Presets/` | 26 built-in presets (inheritance/composition supported), user presets |
+| Codegen | `Codegen/` | Deterministic Luau generator with Script/LocalScript/Module/Transition templates |
+| Plugin | `Plugin/` | Dockable Studio UI with 13 pages, schema-generated property editors, live preview, Apply/Revert, AI Director panel, code export, runtime packaging |
+| Docs | `Documentation/` | API, commands, config schema (+ JSON Schema), presets, examples, performance, AI agent guide |
+| Tests | `Tests/`, `tools/` | 140+ specs and a headless plugin smoke test that run under a strict Roblox mock with the Luau CLI; the same specs run inside Studio |
 
-## Deploy to Netlify
+## Installing
 
-Want to deploy immediately? Click this button
+The project uses [Rojo](https://rojo.space) project files; nothing else is required.
 
-[![Deploy to Netlify Button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/netlify-templates/nextjs-toolbox)
+```sh
+# Runtime library only (place it in ReplicatedStorage)
+rojo build default.project.json -o VisualFX.rbxm
 
-Clicking this button will create a new repo for you that looks exactly like this one, and sets that repo up immediately for deployment on Netlify.
+# Studio plugin (bundles its own copy of the runtime)
+rojo build plugin.project.json -o VisualFXStudio.rbxmx
+# then copy VisualFXStudio.rbxmx into your Studio Plugins folder
+# (Studio: Plugins tab -> Plugins Folder)
 
-### Deploy using the Netlify CLI:
-Click the 'Use the Template' button at the top of this repo or clone it with the `git clone` command. Then install the Netlify CLI tool and run `netlify init`. Or straight from the Netlify CLI, use the `netlify sites:create-template` command in you terminal ([learn more about this command here](https://www.netlify.com/blog/create-a-site-from-a-template-using-the-netlify-cli)) to do the entire flow for you.
-
-```bash
-git clone https://github.com/netlify-templates/nextjs-toolbox
-
-npm install netlify-cli -g # to install the Netlify CLI tool globally
-
-netlify init # initialize a new Netlify project & deploy
+# Test place (runs the suite in Play mode)
+rojo build test.project.json -o VisualFXTests.rbxlx
 ```
 
-It will use the information from the included Netlify configuration file, [`netlify.toml`](./netlify.toml), to set up the build command as `npm run generate` to create a static project and locate the build project in the `dist` directory.
+Without Rojo you can install the plugin build once and use **Settings → Install /
+update in ReplicatedStorage** to copy the runtime package into any place.
 
-The `init` process will also set up continuous deployemnt for your project so that a new build will be triggered & deployed when you push code to the repo (you can change this from your project dashboard: Site Settings/Build & deploy/Continuous Deployment).
+### Runtime packaging workflow
 
-You can also use `netlify deploy (--prod)` to manually deploy and `netlify open` to open your project dashboard.
-
-> 💡 we only have so many keystrokes to give, use `ntl` shorthand for `netlify` or make [an alias of your own](https://www.netlify.com/blog/2020/04/12/speed-up-productivity-with-terminal-aliases/) to save hours...of accumulated miliseconds
-
-### Running Locally
-
-You can use `netlify dev` from the command line to access project information like environment variables as well as
-
-- test functions
-- test redirects
-- share a live session via url with `netlify dev --live`
-- [and more](https://cli.netlify.com/netlify-dev/) :)
-
-### Deployment Resources
-
-- [CLI docs](https://docs.netlify.com/cli/get-started/)
-- [File-based Netlify Configuration](https://docs.netlify.com/configure-builds/file-based-configuration/)
-- [Netlify Dev Overview](https://www.youtube.com/watch?v=RL_gtVZ_79Q&t=812s)
-- [Netlify Edge, CDN deployment](https://www.netlify.com/products/edge/)
-
-## Forms
-
-Netlify Forms are a way to wire up your native HTML into being able to seamlessly handle submissions. To get a form working, we need to add two extra things:
-
-1. An extra attribute on the `form` tag, `data-netlify="true"`
-
-Adding this attribute to our `form` tag will let Netlify know when it loads the page, that it needs to be aware of submissions made through it.
-
-2. A hidden input in the form, `<input type="hidden" name="form-name" value="feedback" />`
-
-Adding this extra input allows our form to be given a name that Netlify can store submissions to. It is a hidden input so your users won't see it but it will pass along the name of our form to Netlify when we submit. In our Netlify Admins site under Forms, we will see our Active Form named `feedback` and all submissions will go there.
-
-In your Netlify dashboard, you need to enable the form detection by following the instructions [here](https://docs.netlify.com/forms/setup/#enable-form-detection).
-
-With both of those we're ready for folks to give us feedback!
-
-### Adding a custom submission page
-
-While Netlify provides a default submission page for folks, we can customize it as well! With the `action` attribute on the `form` tag we will be able to direct our users to our own page.
-
-In [`components/FeedbackForm.js`](./components/FeedbackForm.js) you'll see the form has the attribute `action="/success"` this will take our user to the custom route `/success` which we created under [`pages/success.js`](./pages/success.js). As long as the page exists, you can direct folks to it!
-
-### Blocking bot spam with a honeypot field
-
-Many bots scan through webpages and try to see what pages and forms they can get access to. Instead of letting our website receive spam submissions, we can filter out unrelated submissions with a visually-hidden input field.
-
-```html
-<p class="hidden">
-  <label>
-    Don’t fill this out if you’re human: <input name="bot-field" />
-  </label>
-</p>
+```text
+Studio plugin -> configure environment -> export configuration / code
+  -> install runtime package (ReplicatedStorage.VisualFX)
+  -> require(game.ReplicatedStorage.VisualFX) in your game
 ```
 
-Since screenreader users will still have this announced, it is important for us to
-communicate that this is a field not meant to be filled in.
+The runtime never requires the plugin. User presets saved in the plugin are
+written into `VisualFX.Presets.User` as ModuleScripts, so
+`VisualFX:ApplyPreset("MyPreset")` works in the published game.
 
-For this to work we also need to add a `data-netlify-honeypot` attribute to the form element.
+Where to run it:
 
-```html
-<form data-netlify="true" data-netlify-honeypot="bot-field" action="/success" method="POST"></form>
+* **Server Script**: lighting, atmosphere, post-processing, water and world
+  particles replicate to every player.
+* **LocalScript** (recommended for weather): camera-following rain/snow, zone
+  culling, zone fog-bank blending, lightning and the underwater look need the
+  local camera. Runtime controllers start automatically when the game is running.
+
+## Running the tests
+
+The suite runs outside Roblox with the standalone [Luau CLI](https://github.com/luau-lang/luau/releases)
+against `tools/mock/Roblox.luau`, a strict engine mock (unknown properties
+error, numbers are stored as float32, `Parent` locks after `Destroy`, attributes
+and tags are validated).
+
+```sh
+LUAU=/path/to/luau sh tools/test.sh          # all specs + plugin smoke test
+LUAU=/path/to/luau sh tools/test.sh Weather  # only specs whose name contains "Weather"
 ```
 
-[See it here in the template code.](https://github.com/netlify-templates/next-toolbox/blob/main/components/FeedbackForm.js#L8)
+In Studio, build `test.project.json`, open it and press Play: the server script
+runs every spec and restores Lighting/Terrain/Workspace after each test.
 
-### Forms Resources
+`tools/test.sh` also runs `tools/run_plugin_smoke.luau`, which loads the whole
+plugin headlessly, opens the widget, visits every page and drives the main
+flows (preset apply/preview/revert, live property edit + Apply, search, AI
+Director, code export, runtime package install).
 
-- [Netlify Forms Setup](https://docs.netlify.com/forms/setup/)
-- [Netlify Forms](https://www.netlify.com/products/forms/#main)
-- [Netlify Forms - Form Triggered Functions](https://docs.netlify.com/functions/trigger-on-events/)
-- [Netlify Forms - Using reCAPTCHA 2](https://docs.netlify.com/forms/spam-filters/#recaptcha-2-challenge)
+### Regenerating schemas and reference docs
 
-## Netlify Functions
+`Documentation/schema/*.json`, `CONFIG_SCHEMA.md` and `PRESETS.md` are generated
+from the live registries so they cannot drift from the code:
 
-With Netlify, you can build out server-side code without having to setup and maintain a dedicated server. Inside of our default folder path, [`netlify/functions`](./netlify/functions) you can see an example of the format for JavaScript functions with the [`joke.js`](./netlify/functions/joke.js) file.
-
-The function format expects a function named `handler` to be exported. This will be the function that will be invoked whenever a client makes a request to the generated endpoints. The endpoint's format is followed as `/.netlify/functions/joke`. So whenever the site is deployed, if you go to `https://<site base url>/.netlify/functions/joke` you will see a random joke!
-
-> Side note: In our example, we're using `import` to include data from another location and `export const const handler` to let our function be consumed by Netlify. We're able to do this because of [esbuild](https://esbuild.github.io). This is a bundler configuration we set in our `netlify.toml` under `[functions]`.
-
-### Functions Resources
-
-There is quite a bit you can do with these functions, so here are some additional resources to learn more!
-
-- [Netlify Function Format](https://docs.netlify.com/functions/build-with-javascript/#synchronous-function-format)
-- [Build Netlify Functions with TypeScript](https://docs.netlify.com/functions/build-with-typescript/)
-- [Event-triggered Functions](https://docs.netlify.com/functions/trigger-on-events/)
-- [What are Background Functions](https://www.netlify.com/blog/2021/01/07/what-are-background-functions/)
-- [Netlify Functions - Examples](https://functions.netlify.com/examples/)
-- [Using esbuild as your bundler for new ECMAScript Features](https://www.netlify.com/blog/2021/04/02/modern-faster-netlify-functions/)
-
-## Redirects
-
-In the [`netlify.toml`](./netlify.toml) configuration file there is an example of how to implement redirects. Redirects can be used to do many things from redirecting Single Page Apps more predictably, redirecting based on country/language to leveraging On-Demand Builders for [Distributed Persistant Rendering](https://www.netlify.com/blog/2021/04/14/distributed-persistent-rendering-a-new-jamstack-approach-for-faster-builds/).
-
-In the example we'll be using redirects to have a shorter endpoint to Netlify functions. By default, you call a Netlify function when requesting a path like `https://yoursite.netlify.com/.netlify/functions/functionName`. Instead, we'll redirect all calls from a path including `/api` to call on the Netlify functions. So the path will be `https://yoursite.netlify.com/api/functionName`, a lot easier to remember too.
-
-
-### Example
-```toml
-[[redirects]]
-from = "/api/*"
-to = "/.netlify/functions/:splat"
-status = 200
-force = true
+```sh
+LUAU=/path/to/luau sh tools/gen_docs.sh
 ```
 
-First we create a section in the `.toml` for the redirect using `[[redirects]]`. Each redirect should have this line to start the redirect code, and the redirects will be executed in the order they appear in the `.toml` from top to bottom.
+### Layout note
 
-The bare minimum needed is the `from` and `to`, letting the [CDN](https://www.netlify.com/blog/edge-cdn-serverless-cloud-meaaning) know when a route is requested, the `from`, forward it on to another path, the `to`. In the example, we also added an 'Ok' status code, 200, and set the `force` to true to make sure it _always_ redirects from the `from` path.
+The plugin entry point is `Plugin/PluginMain.server.luau`: the `.server`
+suffix tells Rojo to build it as a `Script`, which plugins require.
 
-There are many ways to use redirects. Check out the resouces below to learn more.
+## Design principles
 
-### Redirect Resources
+* **Configuration is data.** Every effect is expressed in a canonical,
+  versioned table (see `Documentation/CONFIG_SCHEMA.md`). Code is never executed
+  from configurations.
+* **One pipeline.** Input → schema validation → compatibility validation →
+  conflict detection → performance validation → plan → execute → structured result.
+* **Reconciliation, not creation.** Sections declare the instances and
+  properties they want; the reconciler locates existing instances by managed
+  identity (`VisualFX_ID` attribute + `VisualFX` tag), adopts compatible
+  developer instances, writes only differences and removes only managed
+  instances. Re-applying a configuration is a no-op.
+* **Non-destructive.** Original values of every property VisualFX touches are
+  recorded (in attributes, so they survive save/reopen) and restored on
+  removal/reset. Previews are journaled and revert exactly, without overwriting
+  edits a developer made in the meantime.
+* **Adapt to the engine.** Property support is detected at runtime by reading
+  real instances; unsupported properties are reported and skipped.
 
-- [Redirect syntax and configuration](https://docs.netlify.com/routing/redirects/#syntax-for-the-netlify-configuration-file)
-- [Redirect options](https://docs.netlify.com/routing/redirects/redirect-options/)
-- [Creating better, more predicatable redirect rules for SPAs](https://www.netlify.com/blog/2020/04/07/creating-better-more-predictable-redirect-rules-for-spas/)
-- [Redirect by country or language](https://docs.netlify.com/routing/redirects/redirect-options/#redirect-by-country-or-language)
-- [On-Demand Builders](https://docs.netlify.com/configure-builds/on-demand-builders/)
+## Known limitations
 
-## Next.js Toolbox Template Video Walkthrough
+These are Roblox engine constraints; VisualFX implements the closest robust
+approximation and says so.
 
-https://user-images.githubusercontent.com/76533034/156541634-4dd7ce20-c413-43c1-ac7d-1494dad00338.mp4
-
-## Testing
-
-### Included Default Testing
-
-We’ve included some tooling that helps us maintain these templates. This template currently uses:
-
-- [Renovate](https://www.mend.io/free-developer-tools/renovate/) - to regularly update our dependencies
-- [Cypress](https://www.cypress.io/) - to run tests against how the template runs in the browser
-- [Cypress Netlify Build Plugin](https://github.com/cypress-io/netlify-plugin-cypress) - to run our tests during our build process
-
-If your team is not interested in this tooling, you can remove them with ease!
-
-### Removing Renovate
-
-In order to keep our project up-to-date with dependencies we use a tool called [Renovate](https://github.com/marketplace/renovate). If you’re not interested in this tooling, delete the `renovate.json` file and commit that onto your main branch.
-
-### Removing Cypress
-
-For our testing, we use [Cypress](https://www.cypress.io/) for end-to-end testing. This makes sure that we can validate that our templates are rendering and displaying as we’d expect. By default, we have Cypress not generate deploy links if our tests don’t pass. If you’d like to keep Cypress and still generate the deploy links, go into your `netlify.toml` and delete the plugin configuration lines:
-
-```diff
-[[plugins]]
-  package = "netlify-plugin-cypress"
--  [plugins.inputs.postBuild]
--    enable = true
--
--  [plugins.inputs]
--    enable = false
-```
-
-If you’d like to remove the `netlify-plugin-cypress` build plugin entirely, you’d need to delete the entire block above instead. And then make sure sure to remove the package from the dependencies using:
-
-```bash
-npm uninstall -D netlify-plugin-cypress
-```
-
-And lastly if you’d like to remove Cypress entirely, delete the entire `cypress` folder and the `cypress.config.ts` file. Then remove the dependency using:
-
-```bash
-npm uninstall cypress
-```
+* **No volumetric fog primitive.** Fog banks use large, soft smoke-texture
+  particles plus Atmosphere blending while the camera is inside a zone.
+* **No underwater fog property.** The underwater look is a client-side
+  ColorCorrection/Blur enabled when `Terrain:ReadVoxels` reports water at the camera.
+* **Particle textures.** Templates use textures that ship with the client
+  (`rbxasset://textures/particles/*.dds`). Rain streaks and leaves are
+  approximations; set `Texture` to your own assets for production visuals.
+* **Lighting.Technology** is typically writable only from Studio. At runtime
+  the write is rejected by the engine; VisualFX reports it and continues.
+* **Legacy fog** (`Lighting.Fog*`) has no visible effect while an Atmosphere
+  exists; the validator warns about this combination.
+* **Audio** is not played by VisualFX. Weather exposes `AudioHook` events
+  (`Rain`, `Wind`, `Thunder`, …) for your audio system.
+* **Clipboard.** Studio plugins cannot write to the system clipboard. The Code
+  page's *Copy* button selects the code so you can press Ctrl+C, and *Export*
+  writes the code into a script in the place.
+* **Performance numbers are estimates** of workload (emission rate, estimated
+  live particles). VisualFX never predicts FPS.
+* **Server-side weather.** There is no camera on the server, so camera-attached
+  weather particles stay at their configured position; apply weather from a
+  LocalScript for per-player weather.

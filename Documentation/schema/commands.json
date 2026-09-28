@@ -1,0 +1,654 @@
+{
+  "ApplyPreset": {
+    "Description": "Apply a preset (replaces the scene unless Merge = true).",
+    "Fields": {
+      "Name": {
+        "Description": "preset name",
+        "Kind": "string",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Duration": {
+        "Description": "transition duration in seconds",
+        "Kind": "number",
+        "Required": false
+      },
+      "Easing": {
+        "Description": "easing style",
+        "Kind": "string",
+        "Required": false
+      },
+      "Merge": {
+        "Description": "merge into the current scene",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Overrides": {
+        "Description": "configuration merged on top of the preset",
+        "Kind": "table",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "Batch": {
+    "Description": "Run several commands in order. Atomic (default true) reverts everything if any command fails.",
+    "Fields": {
+      "Atomic": {
+        "Description": "revert all on failure (default true)",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Commands": {
+        "Description": "array of commands",
+        "Kind": "table",
+        "Required": true
+      }
+    },
+    "Mutating": true
+  },
+  "CommitPreview": {
+    "Description": "Keep the current preview.",
+    "Fields": {},
+    "Mutating": false
+  },
+  "CreateParticleSystem": {
+    "Description": "Create or replace a named particle system.",
+    "Fields": {
+      "Name": {
+        "Description": "system name",
+        "Kind": "string",
+        "Required": true
+      },
+      "Template": {
+        "Description": "particle template",
+        "Kind": "string",
+        "Required": false
+      },
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "CreateScene": {
+    "Description": "Create a complete scene from a configuration or a description { Mood, Time, Weather, Environment, Fog, LightingStyle, WaterStyle }.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration or description",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Duration": {
+        "Description": "transition duration",
+        "Kind": "number",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "CreateWeather": {
+    "Description": "Set the weather. Type is a weather type; Configuration holds Intensity, Wind, Fog, Lightning, RainIntensity, ...",
+    "Fields": {
+      "Type": {
+        "Description": "weather type",
+        "Kind": "string",
+        "Required": true
+      },
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Duration": {
+        "Description": "transition duration in seconds",
+        "Kind": "number",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "CreateZone": {
+    "Description": "Create or replace a spatial effect zone (Environment.Zones).",
+    "Fields": {
+      "Name": {
+        "Description": "zone name",
+        "Kind": "string",
+        "Required": true
+      },
+      "Configuration": {
+        "Description": "{ Effect, Position, Size, Intensity, ... }",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "DeletePreset": {
+    "Description": "Delete a user preset (built-in presets are protected).",
+    "Fields": {
+      "Name": {
+        "Description": "preset name",
+        "Kind": "string",
+        "Required": true
+      }
+    },
+    "Mutating": false
+  },
+  "DetectConflicts": {
+    "Description": "Detect conflicts in the live scene (duplicates, stacked effects, ignored fog, ...).",
+    "Fields": {},
+    "Mutating": false
+  },
+  "DiffScene": {
+    "Description": "Compare a configuration with the live scene without changing anything.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "Merge": {
+        "Description": "diff the result of merging instead of replacing",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  },
+  "ExportConfiguration": {
+    "Description": "Export the current configuration. Format: table | json | document.",
+    "Fields": {
+      "Format": {
+        "Description": "table | json | document",
+        "Kind": "string",
+        "Required": false
+      },
+      "Resolved": {
+        "Description": "export the resolved configuration",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  },
+  "GenerateCode": {
+    "Description": "Generate readable Luau for a configuration (default: current).",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "Options": {
+        "Description": "{ Template = Script | LocalScript | Module | Transition, RequirePath, Comments }",
+        "Kind": "table",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  },
+  "GetDocumentation": {
+    "Description": "Structured agent guide (workflow, rules, actions, examples).",
+    "Fields": {},
+    "Mutating": false
+  },
+  "GetPerformanceStats": {
+    "Description": "Workload estimates (particle systems, particle rate, managed instances, update frequency).",
+    "Fields": {},
+    "Mutating": false
+  },
+  "GetPreset": {
+    "Description": "Return a preset's resolved configuration (inheritance expanded).",
+    "Fields": {
+      "Name": {
+        "Description": "preset name",
+        "Kind": "string",
+        "Required": true
+      }
+    },
+    "Mutating": false
+  },
+  "GetSchema": {
+    "Description": "Machine-readable schema of sections, fields, weather types, templates, presets and commands.",
+    "Fields": {
+      "Format": {
+        "Description": "table (default) | jsonschema",
+        "Kind": "string",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  },
+  "ImportConfiguration": {
+    "Description": "Validate and apply a configuration (table, VisualFXConfig document or JSON text).",
+    "Fields": {
+      "Apply": {
+        "Description": "apply after validation (default true)",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "Data": {
+        "Description": "table or JSON string",
+        "Kind": "any",
+        "Required": false
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Merge": {
+        "Description": "merge instead of replace",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "InspectScene": {
+    "Description": "Structured description of the current visual state, managed effects and conflicts.",
+    "Fields": {
+      "Options": {
+        "Description": "{ MaxParticles = number }",
+        "Kind": "table",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  },
+  "ListActions": {
+    "Description": "List every action with its fields.",
+    "Fields": {},
+    "Mutating": false
+  },
+  "ListPresets": {
+    "Description": "List presets. Filter: { Category, Source, Search }.",
+    "Fields": {
+      "Filter": {
+        "Description": "{ Category, Source, Search }",
+        "Kind": "table",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  },
+  "PreviewScene": {
+    "Description": "Apply a configuration as a revertible preview (merge unless Replace).",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration",
+        "Kind": "table",
+        "Required": true
+      },
+      "Replace": {
+        "Description": "replace instead of merge",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "RemoveParticleSystem": {
+    "Description": "Remove a named particle system.",
+    "Fields": {
+      "Name": {
+        "Description": "system name",
+        "Kind": "string",
+        "Required": true
+      }
+    },
+    "Mutating": true
+  },
+  "RemoveWeather": {
+    "Description": "Remove the weather and everything it created.",
+    "Fields": {},
+    "Mutating": true
+  },
+  "RemoveZone": {
+    "Description": "Remove a spatial effect zone.",
+    "Fields": {
+      "Name": {
+        "Description": "zone name",
+        "Kind": "string",
+        "Required": true
+      }
+    },
+    "Mutating": true
+  },
+  "ResetManagedEffects": {
+    "Description": "Remove all VisualFX-managed effects and restore original values. Developer content is untouched.",
+    "Fields": {},
+    "Mutating": true
+  },
+  "RevertPreview": {
+    "Description": "Undo the current preview exactly (developer edits made meanwhile are kept).",
+    "Fields": {},
+    "Mutating": false
+  },
+  "SavePreset": {
+    "Description": "Save a configuration (default: the current one) as a user preset.",
+    "Fields": {
+      "Name": {
+        "Description": "preset name",
+        "Kind": "string",
+        "Required": true
+      },
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "Overwrite": {
+        "Description": "replace an existing user preset",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  },
+  "SetAtmosphere": {
+    "Description": "Set Atmosphere properties (merge; Replace = true to replace).",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "replace the section instead of merging",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "SetClouds": {
+    "Description": "Set Clouds properties.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "replace the section",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "SetEnvironment": {
+    "Description": "Set Environment { Wind, DayNight, Zones }.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "replace the section",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "SetLighting": {
+    "Description": "Set Lighting service properties (merge; Replace = true to replace).",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "replace the section",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "SetPostProcessing": {
+    "Description": "Set post-processing effects { Bloom, ColorCorrection, DepthOfField, SunRays, Blur }.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "replace the section",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "SetQuality": {
+    "Description": "Set the quality level (Low | Medium | High | Ultra | Custom) with optional overrides.",
+    "Fields": {
+      "Level": {
+        "Description": "quality level",
+        "Kind": "string",
+        "Required": true
+      },
+      "Overrides": {
+        "Description": "profile overrides",
+        "Kind": "table",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "SetSky": {
+    "Description": "Set Sky properties.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "replace the section",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "SetWater": {
+    "Description": "Set terrain water properties (merge; Replace = true to replace).",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "replace the section",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "TransitionScene": {
+    "Description": "Smoothly transition to a configuration (merged) or preset over Duration seconds.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "Duration": {
+        "Description": "seconds (default 1)",
+        "Kind": "number",
+        "Required": false
+      },
+      "Easing": {
+        "Description": "Linear | Smooth | Sine | Quad | Cubic | Quart | Quint | Expo | Circular | Back",
+        "Kind": "string",
+        "Required": false
+      },
+      "EasingDirection": {
+        "Description": "In | Out | InOut",
+        "Kind": "string",
+        "Required": false
+      },
+      "Preset": {
+        "Description": "preset to transition to",
+        "Kind": "string",
+        "Required": false
+      },
+      "Replace": {
+        "Description": "treat Configuration as a complete scene",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "UpdateParticleSystem": {
+    "Description": "Merge changes into an existing particle system.",
+    "Fields": {
+      "Name": {
+        "Description": "system name",
+        "Kind": "string",
+        "Required": true
+      },
+      "Configuration": {
+        "Description": "partial configuration",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "UpdateScene": {
+    "Description": "Merge changes into the current scene. Use \"$remove\" to delete keys.",
+    "Fields": {
+      "Configuration": {
+        "Description": "partial configuration",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      },
+      "Duration": {
+        "Description": "transition duration",
+        "Kind": "number",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "UpdateWeather": {
+    "Description": "Merge changes into the current weather (e.g. Intensity).",
+    "Fields": {
+      "Configuration": {
+        "Description": "partial weather configuration",
+        "Kind": "table",
+        "Required": true
+      },
+      "DryRun": {
+        "Description": "only report what would change",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": true
+  },
+  "ValidateConfiguration": {
+    "Description": "Validate a configuration (default: current) without applying it.",
+    "Fields": {
+      "Configuration": {
+        "Description": "configuration table (see CONFIG_SCHEMA.md)",
+        "Kind": "table",
+        "Required": false
+      },
+      "Partial": {
+        "Description": "allow missing required fields",
+        "Kind": "boolean",
+        "Required": false
+      }
+    },
+    "Mutating": false
+  }
+}

@@ -1,0 +1,3041 @@
+{
+  "$id": "urn:visualfx:config:v1",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "additionalProperties": false,
+  "description": "Canonical, versioned VisualFX scene configuration. Roblox values use the tagged encodings in Core/Serialization.luau.",
+  "properties": {
+    "Version": {
+      "description": "Configuration schema version.",
+      "minimum": 0,
+      "type": "integer"
+    },
+    "Metadata": {
+      "properties": {
+        "Name": {
+          "type": "string"
+        },
+        "Author": {
+          "type": "string"
+        },
+        "Category": {
+          "type": "string"
+        },
+        "Description": {
+          "type": "string"
+        },
+        "Tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Inherits": {
+      "description": "Preset names merged left to right.",
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "Quality": {
+      "additionalProperties": false,
+      "description": "Quality level and performance budget overrides.",
+      "properties": {
+        "Level": {
+          "enum": ["Low", "Medium", "High", "Ultra", "Custom"],
+          "type": "string"
+        },
+        "PostProcessing": {
+          "additionalProperties": false,
+          "properties": {
+            "Bloom": {
+              "type": "boolean"
+            },
+            "Blur": {
+              "type": "boolean"
+            },
+            "ColorCorrection": {
+              "type": "boolean"
+            },
+            "DepthOfField": {
+              "type": "boolean"
+            },
+            "SunRays": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "ActivationDistance": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "MaxParticleRate": {
+          "minimum": 0,
+          "type": "number"
+        },
+        "MaxParticleSystems": {
+          "maximum": 128,
+          "minimum": 0,
+          "type": "integer"
+        },
+        "ParticleRateScale": {
+          "maximum": 4,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Pooling": {
+          "type": "boolean"
+        },
+        "SpatialCulling": {
+          "type": "boolean"
+        },
+        "TransitionFrequency": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "number"
+        },
+        "UpdateFrequency": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "number"
+        },
+        "WeatherFrequency": {
+          "maximum": 60,
+          "minimum": 1,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Lighting": {
+      "additionalProperties": false,
+      "description": "Lighting service properties: time of day, brightness, ambient colors, shadows.",
+      "properties": {
+        "Ambient": {
+          "description": "Ambient light in enclosed/indoor areas.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "Brightness": {
+          "description": "Intensity of sun/moon light.",
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ClockTime": {
+          "description": "Time of day in hours (0-24).",
+          "maximum": 24,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ColorShiftBottom": {
+          "description": "Tint of surfaces facing away from the sun.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "ColorShiftTop": {
+          "description": "Tint of surfaces facing the sun.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "EnvironmentDiffuseScale": {
+          "description": "Ambient light derived from the sky.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "EnvironmentSpecularScale": {
+          "description": "Specular reflections derived from the sky (also affects water/metal).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "ExposureCompensation": {
+          "description": "Camera exposure offset in stops.",
+          "maximum": 3,
+          "minimum": -3,
+          "type": "number"
+        },
+        "FogColor": {
+          "description": "Legacy fog color (ignored while an Atmosphere exists).",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "FogEnd": {
+          "description": "Legacy fog end distance (ignored while an Atmosphere exists).",
+          "minimum": 0,
+          "type": "number"
+        },
+        "FogStart": {
+          "description": "Legacy fog start distance (ignored while an Atmosphere exists).",
+          "minimum": 0,
+          "type": "number"
+        },
+        "GeographicLatitude": {
+          "description": "Latitude used for sun/moon position.",
+          "maximum": 90,
+          "minimum": -90,
+          "type": "number"
+        },
+        "GlobalShadows": {
+          "description": "Enables sun/moon shadows.",
+          "type": "boolean"
+        },
+        "OutdoorAmbient": {
+          "description": "Ambient light outdoors.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "ShadowSoftness": {
+          "description": "Shadow edge blur (ShadowMap/Future).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Technology": {
+          "description": "Lighting technology. Usually only writable from Studio; skipped with a warning elsewhere.",
+          "oneOf": [
+            {
+              "enum": ["Compatibility", "Future", "Legacy", "ShadowMap", "Unified", "Voxel"],
+              "type": "string"
+            },
+            {
+              "properties": {
+                "$type": {
+                  "const": "EnumItem"
+                },
+                "enum": {
+                  "const": "Technology"
+                },
+                "name": {
+                  "type": "string"
+                }
+              },
+              "required": ["$type", "enum", "name"],
+              "type": "object"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Atmosphere": {
+      "additionalProperties": false,
+      "description": "Atmospheric scattering, distance fog and haze.",
+      "properties": {
+        "Color": {
+          "description": "Hue of the atmosphere.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "Decay": {
+          "description": "Hue away from the sun.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "Density": {
+          "description": "How much light the air absorbs (distance fog).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Glare": {
+          "description": "Glow around the sun.",
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Haze": {
+          "description": "Haziness above the horizon.",
+          "maximum": 10,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Offset": {
+          "description": "Light transmission between camera and sky (horizon silhouette).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Sky": {
+      "additionalProperties": false,
+      "description": "Skybox, sun, moon and stars.",
+      "properties": {
+        "CelestialBodiesShown": {
+          "type": "boolean"
+        },
+        "MoonAngularSize": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "number"
+        },
+        "MoonTextureId": {
+          "type": "string"
+        },
+        "SkyboxBk": {
+          "description": "Skybox back face texture (content id).",
+          "type": "string"
+        },
+        "SkyboxDn": {
+          "type": "string"
+        },
+        "SkyboxFt": {
+          "type": "string"
+        },
+        "SkyboxLf": {
+          "type": "string"
+        },
+        "SkyboxOrientation": {
+          "description": "Skybox rotation in degrees (newer engines only).",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Vector3"
+                },
+                "xyz": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "xyz"],
+              "type": "object"
+            },
+            {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "SkyboxRt": {
+          "type": "string"
+        },
+        "SkyboxUp": {
+          "type": "string"
+        },
+        "StarCount": {
+          "maximum": 5000,
+          "minimum": 0,
+          "type": "number"
+        },
+        "SunAngularSize": {
+          "maximum": 60,
+          "minimum": 0,
+          "type": "number"
+        },
+        "SunTextureId": {
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Clouds": {
+      "additionalProperties": false,
+      "description": "Dynamic terrain clouds (Workspace.Terrain.Clouds).",
+      "properties": {
+        "Enabled": {
+          "type": "boolean"
+        },
+        "Color": {
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "Cover": {
+          "description": "Fraction of the sky covered by clouds.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Density": {
+          "description": "Cloud particle density (opacity).",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "PostProcessing": {
+      "additionalProperties": false,
+      "description": "Post-processing effects parented to Lighting.",
+      "properties": {
+        "Bloom": {
+          "additionalProperties": false,
+          "description": "Glow around bright areas.",
+          "properties": {
+            "Enabled": {
+              "type": "boolean"
+            },
+            "Intensity": {
+              "minimum": 0,
+              "type": "number"
+            },
+            "Size": {
+              "maximum": 56,
+              "minimum": 0,
+              "type": "number"
+            },
+            "Threshold": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "Blur": {
+          "additionalProperties": false,
+          "description": "Full-screen blur.",
+          "properties": {
+            "Enabled": {
+              "type": "boolean"
+            },
+            "Size": {
+              "maximum": 56,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "ColorCorrection": {
+          "additionalProperties": false,
+          "description": "Color grading.",
+          "properties": {
+            "Enabled": {
+              "type": "boolean"
+            },
+            "Brightness": {
+              "maximum": 1,
+              "minimum": -1,
+              "type": "number"
+            },
+            "Contrast": {
+              "maximum": 1,
+              "minimum": -1,
+              "type": "number"
+            },
+            "Saturation": {
+              "maximum": 1,
+              "minimum": -1,
+              "type": "number"
+            },
+            "TintColor": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "$type": {
+                      "const": "Color3"
+                    },
+                    "rgb": {
+                      "items": {
+                        "maximum": 255,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "maxItems": 3,
+                      "minItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "required": ["$type", "rgb"],
+                  "type": "object"
+                },
+                {
+                  "pattern": "^#?[0-9A-Fa-f]{6}$",
+                  "type": "string"
+                },
+                {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "DepthOfField": {
+          "additionalProperties": false,
+          "description": "Distance blur.",
+          "properties": {
+            "Enabled": {
+              "type": "boolean"
+            },
+            "FarIntensity": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "FocusDistance": {
+              "maximum": 200,
+              "minimum": 0,
+              "type": "number"
+            },
+            "InFocusRadius": {
+              "maximum": 50,
+              "minimum": 0,
+              "type": "number"
+            },
+            "NearIntensity": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "SunRays": {
+          "additionalProperties": false,
+          "description": "God rays from the sun.",
+          "properties": {
+            "Enabled": {
+              "type": "boolean"
+            },
+            "Intensity": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            "Spread": {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Water": {
+      "additionalProperties": false,
+      "description": "Terrain water appearance and the underwater look.",
+      "properties": {
+        "Color": {
+          "description": "Water tint.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Color3"
+                },
+                "rgb": {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "rgb"],
+              "type": "object"
+            },
+            {
+              "pattern": "^#?[0-9A-Fa-f]{6}$",
+              "type": "string"
+            },
+            {
+              "items": {
+                "maximum": 255,
+                "minimum": 0,
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "Reflectance": {
+          "description": "Strength of sky reflections.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Transparency": {
+          "description": "0 = opaque, 1 = fully clear.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Underwater": {
+          "additionalProperties": false,
+          "description": "Client-side underwater look (approximation using ColorCorrectionEffect/BlurEffect).",
+          "properties": {
+            "Enabled": {
+              "type": "boolean"
+            },
+            "BlurSize": {
+              "maximum": 56,
+              "minimum": 0,
+              "type": "number"
+            },
+            "Brightness": {
+              "maximum": 1,
+              "minimum": -1,
+              "type": "number"
+            },
+            "Contrast": {
+              "maximum": 1,
+              "minimum": -1,
+              "type": "number"
+            },
+            "Saturation": {
+              "maximum": 1,
+              "minimum": -1,
+              "type": "number"
+            },
+            "TintColor": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "$type": {
+                      "const": "Color3"
+                    },
+                    "rgb": {
+                      "items": {
+                        "maximum": 255,
+                        "minimum": 0,
+                        "type": "number"
+                      },
+                      "maxItems": 3,
+                      "minItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "required": ["$type", "rgb"],
+                  "type": "object"
+                },
+                {
+                  "pattern": "^#?[0-9A-Fa-f]{6}$",
+                  "type": "string"
+                },
+                {
+                  "items": {
+                    "maximum": 255,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              ]
+            }
+          },
+          "type": "object"
+        },
+        "WaveSize": {
+          "description": "Wave height.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "WaveSpeed": {
+          "description": "Wave animation speed.",
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Particles": {
+      "additionalProperties": {
+        "properties": {
+          "Template": {
+            "description": "Particle template providing defaults (Rain, Snow, ...).",
+            "type": "string"
+          },
+          "Enabled": {
+            "type": "boolean"
+          },
+          "Acceleration": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "Vector3"
+                  },
+                  "xyz": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "xyz"],
+                "type": "object"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              }
+            ]
+          },
+          "Area": {
+            "description": "Size of the emission volume in studs.",
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "Vector3"
+                  },
+                  "xyz": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "xyz"],
+                "type": "object"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              }
+            ]
+          },
+          "Attach": {
+            "description": "Follow the local camera or stay at Position.",
+            "enum": ["Camera", "World"],
+            "type": "string"
+          },
+          "Brightness": {
+            "minimum": 0,
+            "type": "number"
+          },
+          "Color": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "ColorSequence"
+                  },
+                  "keypoints": {
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "keypoints"],
+                "type": "object"
+              },
+              {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Color3"
+                      },
+                      "rgb": {
+                        "items": {
+                          "maximum": 255,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "rgb"],
+                    "type": "object"
+                  },
+                  {
+                    "pattern": "^#?[0-9A-Fa-f]{6}$",
+                    "type": "string"
+                  },
+                  {
+                    "items": {
+                      "maximum": 255,
+                      "minimum": 0,
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                ]
+              }
+            ]
+          },
+          "CullDistance": {
+            "description": "Disable when the camera is farther than this (World attach). Defaults to the quality profile.",
+            "minimum": 0,
+            "type": "number"
+          },
+          "Drag": {
+            "type": "number"
+          },
+          "EmissionDirection": {
+            "oneOf": [
+              {
+                "enum": ["Back", "Bottom", "Front", "Left", "Right", "Top"],
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "$type": {
+                    "const": "EnumItem"
+                  },
+                  "enum": {
+                    "const": "NormalId"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["$type", "enum", "name"],
+                "type": "object"
+              }
+            ]
+          },
+          "Lifetime": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "NumberRange"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": ["$type", "min", "max"],
+                "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "LightEmission": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "LightInfluence": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "LockedToPart": {
+            "type": "boolean"
+          },
+          "Offset": {
+            "description": "Offset from the camera when Attach = Camera.",
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "Vector3"
+                  },
+                  "xyz": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "xyz"],
+                "type": "object"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              }
+            ]
+          },
+          "Orientation": {
+            "oneOf": [
+              {
+                "enum": ["FacingCamera", "FacingCameraWorldUp", "VelocityParallel", "VelocityPerpendicular"],
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "$type": {
+                    "const": "EnumItem"
+                  },
+                  "enum": {
+                    "const": "ParticleOrientation"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["$type", "enum", "name"],
+                "type": "object"
+              }
+            ]
+          },
+          "Position": {
+            "description": "World position of the emission volume (World attach, or server fallback).",
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "Vector3"
+                  },
+                  "xyz": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "xyz"],
+                "type": "object"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 3,
+                "minItems": 3,
+                "type": "array"
+              }
+            ]
+          },
+          "Priority": {
+            "description": "Higher priority systems keep their budget first when quality limits apply.",
+            "type": "number"
+          },
+          "Rate": {
+            "description": "Particles emitted per second (before quality scaling).",
+            "minimum": 0,
+            "type": "number"
+          },
+          "RotSpeed": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "NumberRange"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": ["$type", "min", "max"],
+                "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "Rotation": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "NumberRange"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": ["$type", "min", "max"],
+                "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "Shape": {
+            "oneOf": [
+              {
+                "enum": ["Box", "Cylinder", "Disc", "Sphere"],
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "$type": {
+                    "const": "EnumItem"
+                  },
+                  "enum": {
+                    "const": "ParticleEmitterShape"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["$type", "enum", "name"],
+                "type": "object"
+              }
+            ]
+          },
+          "ShapeInOut": {
+            "oneOf": [
+              {
+                "enum": ["InAndOut", "Inward", "Outward"],
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "$type": {
+                    "const": "EnumItem"
+                  },
+                  "enum": {
+                    "const": "ParticleEmitterShapeInOut"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["$type", "enum", "name"],
+                "type": "object"
+              }
+            ]
+          },
+          "ShapePartial": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "ShapeStyle": {
+            "oneOf": [
+              {
+                "enum": ["Surface", "Volume"],
+                "type": "string"
+              },
+              {
+                "properties": {
+                  "$type": {
+                    "const": "EnumItem"
+                  },
+                  "enum": {
+                    "const": "ParticleEmitterShapeStyle"
+                  },
+                  "name": {
+                    "type": "string"
+                  }
+                },
+                "required": ["$type", "enum", "name"],
+                "type": "object"
+              }
+            ]
+          },
+          "Size": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "NumberSequence"
+                  },
+                  "keypoints": {
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "keypoints"],
+                "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "Speed": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "NumberRange"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "min": {
+                    "type": "number"
+                  }
+                },
+                "required": ["$type", "min", "max"],
+                "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "SpreadAngle": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "Vector2"
+                  },
+                  "xy": {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "xy"],
+                "type": "object"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "maxItems": 2,
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "Squash": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "NumberSequence"
+                  },
+                  "keypoints": {
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "keypoints"],
+                "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "Texture": {
+            "type": "string"
+          },
+          "TimeScale": {
+            "maximum": 1,
+            "minimum": 0,
+            "type": "number"
+          },
+          "Transparency": {
+            "oneOf": [
+              {
+                "properties": {
+                  "$type": {
+                    "const": "NumberSequence"
+                  },
+                  "keypoints": {
+                    "type": "array"
+                  }
+                },
+                "required": ["$type", "keypoints"],
+                "type": "object"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "items": {
+                  "type": "number"
+                },
+                "minItems": 2,
+                "type": "array"
+              }
+            ]
+          },
+          "VelocityInheritance": {
+            "type": "number"
+          },
+          "WindAffectsDrag": {
+            "type": "boolean"
+          },
+          "ZOffset": {
+            "type": "number"
+          }
+        },
+        "type": "object"
+      },
+      "description": "Named particle systems. Keys are system names; values are template overrides.",
+      "type": "object"
+    },
+    "Weather": {
+      "additionalProperties": false,
+      "description": "High-level weather composed of atmosphere, lighting, clouds, particles, wind, fog, lightning and audio hooks.",
+      "properties": {
+        "Type": {
+          "description": "Weather type.",
+          "enum": ["Autumn", "Blizzard", "Clear", "Cloudy", "Custom", "DustStorm", "Fog", "HeavyRain", "LightRain", "MagicalStorm", "Overcast", "Sandstorm", "Snow", "Thunderstorm", "Windy"],
+          "type": "string"
+        },
+        "Particles": {
+          "additionalProperties": {
+            "properties": {
+              "Template": {
+                "description": "Particle template providing defaults (Rain, Snow, ...).",
+                "type": "string"
+              },
+              "Enabled": {
+                "type": "boolean"
+              },
+              "Acceleration": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Vector3"
+                      },
+                      "xyz": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "xyz"],
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Area": {
+                "description": "Size of the emission volume in studs.",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Vector3"
+                      },
+                      "xyz": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "xyz"],
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Attach": {
+                "description": "Follow the local camera or stay at Position.",
+                "enum": ["Camera", "World"],
+                "type": "string"
+              },
+              "Brightness": {
+                "minimum": 0,
+                "type": "number"
+              },
+              "Color": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "ColorSequence"
+                      },
+                      "keypoints": {
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "keypoints"],
+                    "type": "object"
+                  },
+                  {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "Color3"
+                          },
+                          "rgb": {
+                            "items": {
+                              "maximum": 255,
+                              "minimum": 0,
+                              "type": "number"
+                            },
+                            "maxItems": 3,
+                            "minItems": 3,
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "rgb"],
+                        "type": "object"
+                      },
+                      {
+                        "pattern": "^#?[0-9A-Fa-f]{6}$",
+                        "type": "string"
+                      },
+                      {
+                        "items": {
+                          "maximum": 255,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    ]
+                  }
+                ]
+              },
+              "CullDistance": {
+                "description": "Disable when the camera is farther than this (World attach). Defaults to the quality profile.",
+                "minimum": 0,
+                "type": "number"
+              },
+              "Drag": {
+                "type": "number"
+              },
+              "EmissionDirection": {
+                "oneOf": [
+                  {
+                    "enum": ["Back", "Bottom", "Front", "Left", "Right", "Top"],
+                    "type": "string"
+                  },
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "EnumItem"
+                      },
+                      "enum": {
+                        "const": "NormalId"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["$type", "enum", "name"],
+                    "type": "object"
+                  }
+                ]
+              },
+              "Lifetime": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "NumberRange"
+                      },
+                      "max": {
+                        "type": "number"
+                      },
+                      "min": {
+                        "type": "number"
+                      }
+                    },
+                    "required": ["$type", "min", "max"],
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "LightEmission": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "LightInfluence": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "LockedToPart": {
+                "type": "boolean"
+              },
+              "Offset": {
+                "description": "Offset from the camera when Attach = Camera.",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Vector3"
+                      },
+                      "xyz": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "xyz"],
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Orientation": {
+                "oneOf": [
+                  {
+                    "enum": ["FacingCamera", "FacingCameraWorldUp", "VelocityParallel", "VelocityPerpendicular"],
+                    "type": "string"
+                  },
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "EnumItem"
+                      },
+                      "enum": {
+                        "const": "ParticleOrientation"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["$type", "enum", "name"],
+                    "type": "object"
+                  }
+                ]
+              },
+              "Position": {
+                "description": "World position of the emission volume (World attach, or server fallback).",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Vector3"
+                      },
+                      "xyz": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "xyz"],
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Priority": {
+                "description": "Higher priority systems keep their budget first when quality limits apply.",
+                "type": "number"
+              },
+              "Rate": {
+                "description": "Particles emitted per second (before quality scaling).",
+                "minimum": 0,
+                "type": "number"
+              },
+              "RotSpeed": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "NumberRange"
+                      },
+                      "max": {
+                        "type": "number"
+                      },
+                      "min": {
+                        "type": "number"
+                      }
+                    },
+                    "required": ["$type", "min", "max"],
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Rotation": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "NumberRange"
+                      },
+                      "max": {
+                        "type": "number"
+                      },
+                      "min": {
+                        "type": "number"
+                      }
+                    },
+                    "required": ["$type", "min", "max"],
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Shape": {
+                "oneOf": [
+                  {
+                    "enum": ["Box", "Cylinder", "Disc", "Sphere"],
+                    "type": "string"
+                  },
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "EnumItem"
+                      },
+                      "enum": {
+                        "const": "ParticleEmitterShape"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["$type", "enum", "name"],
+                    "type": "object"
+                  }
+                ]
+              },
+              "ShapeInOut": {
+                "oneOf": [
+                  {
+                    "enum": ["InAndOut", "Inward", "Outward"],
+                    "type": "string"
+                  },
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "EnumItem"
+                      },
+                      "enum": {
+                        "const": "ParticleEmitterShapeInOut"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["$type", "enum", "name"],
+                    "type": "object"
+                  }
+                ]
+              },
+              "ShapePartial": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "ShapeStyle": {
+                "oneOf": [
+                  {
+                    "enum": ["Surface", "Volume"],
+                    "type": "string"
+                  },
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "EnumItem"
+                      },
+                      "enum": {
+                        "const": "ParticleEmitterShapeStyle"
+                      },
+                      "name": {
+                        "type": "string"
+                      }
+                    },
+                    "required": ["$type", "enum", "name"],
+                    "type": "object"
+                  }
+                ]
+              },
+              "Size": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "NumberSequence"
+                      },
+                      "keypoints": {
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "keypoints"],
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Speed": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "NumberRange"
+                      },
+                      "max": {
+                        "type": "number"
+                      },
+                      "min": {
+                        "type": "number"
+                      }
+                    },
+                    "required": ["$type", "min", "max"],
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "SpreadAngle": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Vector2"
+                      },
+                      "xy": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "xy"],
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 2,
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Squash": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "NumberSequence"
+                      },
+                      "keypoints": {
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "keypoints"],
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Texture": {
+                "type": "string"
+              },
+              "TimeScale": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "Transparency": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "NumberSequence"
+                      },
+                      "keypoints": {
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "keypoints"],
+                    "type": "object"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "type": "array"
+                  }
+                ]
+              },
+              "VelocityInheritance": {
+                "type": "number"
+              },
+              "WindAffectsDrag": {
+                "type": "boolean"
+              },
+              "ZOffset": {
+                "type": "number"
+              }
+            },
+            "type": "object"
+          },
+          "description": "Per-component particle overrides or extra components.",
+          "type": "object"
+        },
+        "Area": {
+          "description": "Emission volume size for weather particles.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Vector3"
+                },
+                "xyz": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "xyz"],
+              "type": "object"
+            },
+            {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "Attach": {
+          "description": "Where weather particles are emitted.",
+          "enum": ["Camera", "World"],
+          "type": "string"
+        },
+        "DustIntensity": {
+          "description": "Overrides Intensity for Dust/Sand/Debris components.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Fog": {
+          "description": "Extra fog on top of the weather type.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Intensity": {
+          "description": "0 = no influence, 1 = full weather.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Lightning": {
+          "description": "Enable lightning flashes.",
+          "type": "boolean"
+        },
+        "LightningFrequency": {
+          "description": "Average strikes per minute.",
+          "maximum": 60,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Position": {
+          "description": "Center of weather particles when Attach = World.",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Vector3"
+                },
+                "xyz": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "xyz"],
+              "type": "object"
+            },
+            {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        },
+        "RainIntensity": {
+          "description": "Overrides Intensity for the Rain component.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Seed": {
+          "description": "Seed for deterministic lightning timing.",
+          "type": "integer"
+        },
+        "SnowIntensity": {
+          "description": "Overrides Intensity for the Snow component.",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "Wind": {
+          "description": "Wind speed in studs/second (Workspace.GlobalWind).",
+          "minimum": 0,
+          "type": "number"
+        },
+        "WindDirection": {
+          "description": "Wind direction (normalized; Y is ignored).",
+          "oneOf": [
+            {
+              "properties": {
+                "$type": {
+                  "const": "Vector3"
+                },
+                "xyz": {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              },
+              "required": ["$type", "xyz"],
+              "type": "object"
+            },
+            {
+              "items": {
+                "type": "number"
+              },
+              "maxItems": 3,
+              "minItems": 3,
+              "type": "array"
+            }
+          ]
+        }
+      },
+      "type": "object"
+    },
+    "Environment": {
+      "additionalProperties": false,
+      "description": "Wind, day/night cycle and spatial effect zones.",
+      "properties": {
+        "DayNight": {
+          "additionalProperties": false,
+          "description": "Day/night cycle (runtime).",
+          "properties": {
+            "Enabled": {
+              "type": "boolean"
+            },
+            "DayLength": {
+              "description": "Real-time minutes per 24 in-game hours.",
+              "minimum": 0.1,
+              "type": "number"
+            },
+            "DriveLighting": {
+              "description": "Interpolate brightness/ambient/atmosphere colors through built-in sunrise/sunset keyframes.",
+              "type": "boolean"
+            },
+            "Paused": {
+              "type": "boolean"
+            },
+            "StartTime": {
+              "description": "ClockTime when the cycle starts.",
+              "maximum": 24,
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "Wind": {
+          "additionalProperties": false,
+          "description": "Global wind (Workspace.GlobalWind).",
+          "properties": {
+            "Direction": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "$type": {
+                      "const": "Vector3"
+                    },
+                    "xyz": {
+                      "items": {
+                        "type": "number"
+                      },
+                      "maxItems": 3,
+                      "minItems": 3,
+                      "type": "array"
+                    }
+                  },
+                  "required": ["$type", "xyz"],
+                  "type": "object"
+                },
+                {
+                  "items": {
+                    "type": "number"
+                  },
+                  "maxItems": 3,
+                  "minItems": 3,
+                  "type": "array"
+                }
+              ]
+            },
+            "Speed": {
+              "minimum": 0,
+              "type": "number"
+            }
+          },
+          "type": "object"
+        },
+        "Zones": {
+          "additionalProperties": {
+            "properties": {
+              "Effect": {
+                "description": "Particle template for the zone (Fog, Mist, Dust, Leaves, Fireflies, Rain, Snow, ...).",
+                "type": "string"
+              },
+              "Enabled": {
+                "type": "boolean"
+              },
+              "Atmosphere": {
+                "additionalProperties": false,
+                "description": "Atmosphere values blended in while the camera is inside.",
+                "properties": {
+                  "Color": {
+                    "description": "Hue of the atmosphere.",
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "Color3"
+                          },
+                          "rgb": {
+                            "items": {
+                              "maximum": 255,
+                              "minimum": 0,
+                              "type": "number"
+                            },
+                            "maxItems": 3,
+                            "minItems": 3,
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "rgb"],
+                        "type": "object"
+                      },
+                      {
+                        "pattern": "^#?[0-9A-Fa-f]{6}$",
+                        "type": "string"
+                      },
+                      {
+                        "items": {
+                          "maximum": 255,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Decay": {
+                    "description": "Hue away from the sun.",
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "Color3"
+                          },
+                          "rgb": {
+                            "items": {
+                              "maximum": 255,
+                              "minimum": 0,
+                              "type": "number"
+                            },
+                            "maxItems": 3,
+                            "minItems": 3,
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "rgb"],
+                        "type": "object"
+                      },
+                      {
+                        "pattern": "^#?[0-9A-Fa-f]{6}$",
+                        "type": "string"
+                      },
+                      {
+                        "items": {
+                          "maximum": 255,
+                          "minimum": 0,
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Density": {
+                    "description": "How much light the air absorbs (distance fog).",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "Glare": {
+                    "description": "Glow around the sun.",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "Haze": {
+                    "description": "Haziness above the horizon.",
+                    "maximum": 10,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "Offset": {
+                    "description": "Light transmission between camera and sky (horizon silhouette).",
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "BlendDistance": {
+                "description": "Distance over which Atmosphere overrides fade in around the zone.",
+                "minimum": 0,
+                "type": "number"
+              },
+              "CullDistance": {
+                "description": "Disable the zone beyond this camera distance (defaults to the quality profile).",
+                "minimum": 0,
+                "type": "number"
+              },
+              "Intensity": {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              "Overrides": {
+                "additionalProperties": false,
+                "description": "ParticleEmitter overrides for the zone's emitter.",
+                "properties": {
+                  "Enabled": {
+                    "type": "boolean"
+                  },
+                  "Acceleration": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "Vector3"
+                          },
+                          "xyz": {
+                            "items": {
+                              "type": "number"
+                            },
+                            "maxItems": 3,
+                            "minItems": 3,
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "xyz"],
+                        "type": "object"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Brightness": {
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "Color": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "ColorSequence"
+                          },
+                          "keypoints": {
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "keypoints"],
+                        "type": "object"
+                      },
+                      {
+                        "oneOf": [
+                          {
+                            "properties": {
+                              "$type": {
+                                "const": "Color3"
+                              },
+                              "rgb": {
+                                "items": {
+                                  "maximum": 255,
+                                  "minimum": 0,
+                                  "type": "number"
+                                },
+                                "maxItems": 3,
+                                "minItems": 3,
+                                "type": "array"
+                              }
+                            },
+                            "required": ["$type", "rgb"],
+                            "type": "object"
+                          },
+                          {
+                            "pattern": "^#?[0-9A-Fa-f]{6}$",
+                            "type": "string"
+                          },
+                          {
+                            "items": {
+                              "maximum": 255,
+                              "minimum": 0,
+                              "type": "number"
+                            },
+                            "maxItems": 3,
+                            "minItems": 3,
+                            "type": "array"
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  "Drag": {
+                    "type": "number"
+                  },
+                  "EmissionDirection": {
+                    "oneOf": [
+                      {
+                        "enum": ["Back", "Bottom", "Front", "Left", "Right", "Top"],
+                        "type": "string"
+                      },
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "EnumItem"
+                          },
+                          "enum": {
+                            "const": "NormalId"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["$type", "enum", "name"],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "Lifetime": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "NumberRange"
+                          },
+                          "max": {
+                            "type": "number"
+                          },
+                          "min": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["$type", "min", "max"],
+                        "type": "object"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "LightEmission": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "LightInfluence": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "LockedToPart": {
+                    "type": "boolean"
+                  },
+                  "Orientation": {
+                    "oneOf": [
+                      {
+                        "enum": ["FacingCamera", "FacingCameraWorldUp", "VelocityParallel", "VelocityPerpendicular"],
+                        "type": "string"
+                      },
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "EnumItem"
+                          },
+                          "enum": {
+                            "const": "ParticleOrientation"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["$type", "enum", "name"],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "Rate": {
+                    "description": "Particles emitted per second (before quality scaling).",
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "RotSpeed": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "NumberRange"
+                          },
+                          "max": {
+                            "type": "number"
+                          },
+                          "min": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["$type", "min", "max"],
+                        "type": "object"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Rotation": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "NumberRange"
+                          },
+                          "max": {
+                            "type": "number"
+                          },
+                          "min": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["$type", "min", "max"],
+                        "type": "object"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Shape": {
+                    "oneOf": [
+                      {
+                        "enum": ["Box", "Cylinder", "Disc", "Sphere"],
+                        "type": "string"
+                      },
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "EnumItem"
+                          },
+                          "enum": {
+                            "const": "ParticleEmitterShape"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["$type", "enum", "name"],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "ShapeInOut": {
+                    "oneOf": [
+                      {
+                        "enum": ["InAndOut", "Inward", "Outward"],
+                        "type": "string"
+                      },
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "EnumItem"
+                          },
+                          "enum": {
+                            "const": "ParticleEmitterShapeInOut"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["$type", "enum", "name"],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "ShapePartial": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "ShapeStyle": {
+                    "oneOf": [
+                      {
+                        "enum": ["Surface", "Volume"],
+                        "type": "string"
+                      },
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "EnumItem"
+                          },
+                          "enum": {
+                            "const": "ParticleEmitterShapeStyle"
+                          },
+                          "name": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["$type", "enum", "name"],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "Size": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "NumberSequence"
+                          },
+                          "keypoints": {
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "keypoints"],
+                        "type": "object"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Speed": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "NumberRange"
+                          },
+                          "max": {
+                            "type": "number"
+                          },
+                          "min": {
+                            "type": "number"
+                          }
+                        },
+                        "required": ["$type", "min", "max"],
+                        "type": "object"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "SpreadAngle": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "Vector2"
+                          },
+                          "xy": {
+                            "items": {
+                              "type": "number"
+                            },
+                            "maxItems": 2,
+                            "minItems": 2,
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "xy"],
+                        "type": "object"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 2,
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Squash": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "NumberSequence"
+                          },
+                          "keypoints": {
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "keypoints"],
+                        "type": "object"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "Texture": {
+                    "type": "string"
+                  },
+                  "TimeScale": {
+                    "maximum": 1,
+                    "minimum": 0,
+                    "type": "number"
+                  },
+                  "Transparency": {
+                    "oneOf": [
+                      {
+                        "properties": {
+                          "$type": {
+                            "const": "NumberSequence"
+                          },
+                          "keypoints": {
+                            "type": "array"
+                          }
+                        },
+                        "required": ["$type", "keypoints"],
+                        "type": "object"
+                      },
+                      {
+                        "type": "number"
+                      },
+                      {
+                        "items": {
+                          "type": "number"
+                        },
+                        "minItems": 2,
+                        "type": "array"
+                      }
+                    ]
+                  },
+                  "VelocityInheritance": {
+                    "type": "number"
+                  },
+                  "WindAffectsDrag": {
+                    "type": "boolean"
+                  },
+                  "ZOffset": {
+                    "type": "number"
+                  }
+                },
+                "type": "object"
+              },
+              "Position": {
+                "description": "Zone center.",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Vector3"
+                      },
+                      "xyz": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "xyz"],
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                ]
+              },
+              "Size": {
+                "description": "Zone box size in studs.",
+                "oneOf": [
+                  {
+                    "properties": {
+                      "$type": {
+                        "const": "Vector3"
+                      },
+                      "xyz": {
+                        "items": {
+                          "type": "number"
+                        },
+                        "maxItems": 3,
+                        "minItems": 3,
+                        "type": "array"
+                      }
+                    },
+                    "required": ["$type", "xyz"],
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "type": "number"
+                    },
+                    "maxItems": 3,
+                    "minItems": 3,
+                    "type": "array"
+                  }
+                ]
+              }
+            },
+            "type": "object"
+          },
+          "description": "Spatial effect zones keyed by name.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "Effects": {
+      "additionalProperties": {
+        "additionalProperties": true,
+        "properties": {
+          "Effect": {
+            "description": "Registered effect name (defaults to the entry key).",
+            "type": "string"
+          },
+          "Enabled": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      },
+      "description": "Instances of custom effect types registered with VisualFX:RegisterEffect.",
+      "type": "object"
+    }
+  },
+  "title": "VisualFX configuration",
+  "type": "object"
+}

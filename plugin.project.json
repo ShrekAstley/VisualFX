@@ -1,0 +1,23 @@
+{
+  "name": "VisualFXStudio",
+  "tree": {
+    "$className": "Folder",
+    "PluginMain": { "$path": "Plugin/PluginMain.server.luau" },
+    "PluginModules": {
+      "$className": "Folder",
+      "Toolbar": { "$path": "Plugin/Toolbar.luau" },
+      "DockWidget": { "$path": "Plugin/DockWidget.luau" },
+      "UI": { "$path": "Plugin/UI" },
+      "Controllers": { "$path": "Plugin/Controllers" },
+      "Commands": { "$path": "Plugin/Commands" }
+    },
+    "VisualFX": {
+      "$path": "init.luau",
+      "Core": { "$path": "Core" },
+      "Runtime": { "$path": "Runtime" },
+      "AI": { "$path": "AI" },
+      "Presets": { "$path": "Presets" },
+      "Codegen": { "$path": "Codegen" }
+    }
+  }
+}

@@ -1,0 +1,1742 @@
+{
+  "Arctic": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Arctic",
+        "Category": "Biome",
+        "Description": "Cold, bright polar light with light snowfall.",
+        "Tags": ["arctic", "snow", "cold"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [110, 120, 140]
+        },
+        "Brightness": 2.4,
+        "ClockTime": 10,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [230, 240, 255]
+        },
+        "EnvironmentDiffuseScale": 0.8,
+        "EnvironmentSpecularScale": 0.9,
+        "ExposureCompensation": 0.2,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [175, 185, 205]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [215, 228, 240]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [150, 170, 200]
+        },
+        "Density": 0.38,
+        "Glare": 0.3,
+        "Haze": 1.5,
+        "Offset": 0.25
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Saturation": -0.1,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [240, 247, 255]
+          }
+        }
+      },
+      "Water": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [60, 100, 130]
+        },
+        "Reflectance": 1,
+        "Transparency": 0.3,
+        "WaveSize": 0.05,
+        "WaveSpeed": 4
+      },
+      "Weather": {
+        "Type": "Snow",
+        "Intensity": 0.4
+      }
+    },
+    "Summary": {
+      "Name": "Arctic",
+      "Category": "Biome",
+      "Description": "Cold, bright polar light with light snowfall.",
+      "DisplayName": "Arctic",
+      "Source": "BuiltIn",
+      "Tags": ["arctic", "snow", "cold"]
+    }
+  },
+  "Autumn": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Autumn",
+        "Category": "Seasonal",
+        "Description": "Warm autumn grading with falling leaves. Composes well with forest and rain presets.",
+        "Tags": ["autumn", "fall", "leaves"]
+      },
+      "Lighting": {
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 205, 150]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [220, 190, 160]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [150, 100, 70]
+        }
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Saturation": 0.12,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [255, 238, 215]
+          }
+        }
+      },
+      "Particles": {
+        "Leaves": {
+          "Template": "Leaves",
+          "Rate": 14
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Autumn",
+      "Category": "Seasonal",
+      "Description": "Warm autumn grading with falling leaves. Composes well with forest and rain presets.",
+      "DisplayName": "Autumn",
+      "Source": "BuiltIn",
+      "Tags": ["autumn", "fall", "leaves"]
+    }
+  },
+  "AutumnRainForest": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Autumn Rain Forest",
+        "Category": "Forest",
+        "Description": "BaseForest + Autumn + LightRain composed with deterministic merge rules.",
+        "Tags": ["forest", "autumn", "rain", "composed"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [60, 70, 55]
+        },
+        "Brightness": 1.8,
+        "ClockTime": 9,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 205, 150]
+        },
+        "EnvironmentDiffuseScale": 0.6,
+        "EnvironmentSpecularScale": 0.4,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [120, 135, 115]
+        },
+        "ShadowSoftness": 0.4
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [220, 190, 160]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [150, 100, 70]
+        },
+        "Density": 0.4,
+        "Glare": 0,
+        "Haze": 1.5,
+        "Offset": 0.1
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Saturation": 0.12,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [255, 238, 215]
+          }
+        }
+      },
+      "Particles": {
+        "Leaves": {
+          "Template": "Leaves",
+          "Rate": 14
+        }
+      },
+      "Weather": {
+        "Type": "LightRain",
+        "Intensity": 0.55
+      }
+    },
+    "Summary": {
+      "Name": "AutumnRainForest",
+      "Inherits": ["BaseForest", "Autumn", "LightRain"],
+      "Category": "Forest",
+      "Description": "BaseForest + Autumn + LightRain composed with deterministic merge rules.",
+      "DisplayName": "Autumn Rain Forest",
+      "Source": "BuiltIn",
+      "Tags": ["forest", "autumn", "rain", "composed"]
+    }
+  },
+  "BaseForest": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Base Forest",
+        "Category": "Biome",
+        "Description": "Neutral forest base: soft green ambient light. Designed to be composed with other presets.",
+        "Tags": ["forest", "base"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [60, 70, 55]
+        },
+        "Brightness": 1.8,
+        "ClockTime": 9,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [240, 245, 220]
+        },
+        "EnvironmentDiffuseScale": 0.6,
+        "EnvironmentSpecularScale": 0.4,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [120, 135, 115]
+        },
+        "ShadowSoftness": 0.4
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [180, 200, 180]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [100, 120, 100]
+        },
+        "Density": 0.4,
+        "Glare": 0,
+        "Haze": 1.5,
+        "Offset": 0.1
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Saturation": 0.05,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [245, 255, 240]
+          }
+        }
+      }
+    },
+    "Summary": {
+      "Name": "BaseForest",
+      "Category": "Biome",
+      "Description": "Neutral forest base: soft green ambient light. Designed to be composed with other presets.",
+      "DisplayName": "Base Forest",
+      "Source": "BuiltIn",
+      "Tags": ["forest", "base"]
+    }
+  },
+  "CinematicSunset": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Cinematic Sunset",
+        "Author": "VisualFX",
+        "Category": "Cinematic",
+        "Description": "Warm cinematic sunset environment with bloom, sun rays and gentle depth of field.",
+        "Tags": ["sunset", "cinematic", "warm"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [70, 50, 60]
+        },
+        "Brightness": 2.2,
+        "ClockTime": 17.8,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [80, 50, 70]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 170, 110]
+        },
+        "EnvironmentDiffuseScale": 0.5,
+        "EnvironmentSpecularScale": 0.7,
+        "ExposureCompensation": 0.15,
+        "GlobalShadows": true,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [150, 110, 100]
+        },
+        "ShadowSoftness": 0.35
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [245, 170, 130]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [120, 70, 90]
+        },
+        "Density": 0.35,
+        "Glare": 0.6,
+        "Haze": 2,
+        "Offset": 0.1
+      },
+      "Clouds": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [255, 215, 190]
+        },
+        "Cover": 0.45,
+        "Density": 0.55
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 0.8,
+          "Size": 28,
+          "Threshold": 1.6
+        },
+        "ColorCorrection": {
+          "Contrast": 0.12,
+          "Saturation": 0.12,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [255, 235, 220]
+          }
+        },
+        "DepthOfField": {
+          "FarIntensity": 0.15,
+          "FocusDistance": 60,
+          "InFocusRadius": 40,
+          "NearIntensity": 0
+        },
+        "SunRays": {
+          "Intensity": 0.12,
+          "Spread": 0.8
+        }
+      },
+      "Water": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [40, 80, 100]
+        },
+        "Reflectance": 0.9,
+        "Transparency": 0.4,
+        "WaveSize": 0.12,
+        "WaveSpeed": 8
+      }
+    },
+    "Summary": {
+      "Name": "CinematicSunset",
+      "Inherits": ["Sunset"],
+      "Category": "Cinematic",
+      "Description": "Warm cinematic sunset environment with bloom, sun rays and gentle depth of field.",
+      "DisplayName": "Cinematic Sunset",
+      "Source": "BuiltIn",
+      "Tags": ["sunset", "cinematic", "warm"]
+    }
+  },
+  "DarkStorm": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Dark Storm",
+        "Category": "Weather",
+        "Description": "Near-black violent storm with frequent lightning.",
+        "Tags": ["storm", "dark", "lightning"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [25, 28, 35]
+        },
+        "Brightness": 0.6,
+        "ClockTime": 17,
+        "ExposureCompensation": -0.6,
+        "GlobalShadows": true,
+        "ShadowSoftness": 0.9
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Contrast": 0.15,
+          "Saturation": -0.4
+        }
+      },
+      "Weather": {
+        "Type": "Thunderstorm",
+        "Intensity": 1,
+        "LightningFrequency": 10,
+        "Wind": 40
+      }
+    },
+    "Summary": {
+      "Name": "DarkStorm",
+      "Inherits": ["Storm"],
+      "Category": "Weather",
+      "Description": "Near-black violent storm with frequent lightning.",
+      "DisplayName": "Dark Storm",
+      "Source": "BuiltIn",
+      "Tags": ["storm", "dark", "lightning"]
+    }
+  },
+  "Dawn": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Dawn",
+        "Category": "Time of Day",
+        "Description": "Blue hour just before the sun rises.",
+        "Tags": ["dawn", "blue hour"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [40, 45, 70]
+        },
+        "Brightness": 0.8,
+        "ClockTime": 5.6,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [30, 35, 60]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [150, 140, 190]
+        },
+        "ExposureCompensation": 0.3,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [90, 95, 130]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [130, 140, 190]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [50, 55, 95]
+        },
+        "Density": 0.4,
+        "Glare": 0,
+        "Haze": 1.4,
+        "Offset": 0.1
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Saturation": -0.05,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [230, 235, 255]
+          }
+        }
+      },
+      "Particles": {
+        "Mist": {
+          "Template": "Mist",
+          "Rate": 10
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Dawn",
+      "Category": "Time of Day",
+      "Description": "Blue hour just before the sun rises.",
+      "DisplayName": "Dawn",
+      "Source": "BuiltIn",
+      "Tags": ["dawn", "blue hour"]
+    }
+  },
+  "Desert": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Desert",
+        "Category": "Biome",
+        "Description": "Scorching, hazy desert noon.",
+        "Tags": ["desert", "hot", "dry"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [110, 90, 70]
+        },
+        "Brightness": 3.2,
+        "ClockTime": 13,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 225, 180]
+        },
+        "EnvironmentDiffuseScale": 0.6,
+        "EnvironmentSpecularScale": 0.3,
+        "ExposureCompensation": 0.1,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [190, 160, 130]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [230, 200, 160]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [170, 120, 80]
+        },
+        "Density": 0.36,
+        "Glare": 1,
+        "Haze": 2.5,
+        "Offset": 0.2
+      },
+      "Clouds": {
+        "Cover": 0.1,
+        "Density": 0.3
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Contrast": 0.08,
+          "Saturation": 0.05,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [255, 242, 225]
+          }
+        }
+      },
+      "Particles": {
+        "Dust": {
+          "Template": "Dust",
+          "Rate": 30
+        }
+      },
+      "Environment": {
+        "Wind": {
+          "Direction": {
+            "$type": "Vector3",
+            "xyz": [1, 0, 0.2]
+          },
+          "Speed": 12
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Desert",
+      "Category": "Biome",
+      "Description": "Scorching, hazy desert noon.",
+      "DisplayName": "Desert",
+      "Source": "BuiltIn",
+      "Tags": ["desert", "hot", "dry"]
+    }
+  },
+  "Fantasy": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Fantasy",
+        "Category": "Mood",
+        "Description": "Dreamy violet twilight with glowing magic motes.",
+        "Tags": ["fantasy", "magic", "dreamy"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [80, 60, 110]
+        },
+        "Brightness": 1.8,
+        "ClockTime": 18.3,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [90, 60, 160]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 190, 240]
+        },
+        "EnvironmentDiffuseScale": 0.6,
+        "EnvironmentSpecularScale": 0.8,
+        "ExposureCompensation": 0.2,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [150, 120, 190]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [210, 160, 240]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [90, 60, 160]
+        },
+        "Density": 0.38,
+        "Glare": 1.2,
+        "Haze": 2.2,
+        "Offset": 0.2
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 1.3,
+          "Size": 34,
+          "Threshold": 1.1
+        },
+        "ColorCorrection": {
+          "Saturation": 0.25,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [250, 235, 255]
+          }
+        },
+        "SunRays": {
+          "Intensity": 0.18,
+          "Spread": 0.9
+        }
+      },
+      "Particles": {
+        "Fireflies": {
+          "Template": "Fireflies",
+          "Rate": 6
+        },
+        "Motes": {
+          "Template": "Magic",
+          "Area": {
+            "$type": "Vector3",
+            "xyz": [80, 30, 80]
+          },
+          "Attach": "Camera",
+          "Offset": {
+            "$type": "Vector3",
+            "xyz": [0, 8, 0]
+          },
+          "Rate": 30
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Fantasy",
+      "Category": "Mood",
+      "Description": "Dreamy violet twilight with glowing magic motes.",
+      "DisplayName": "Fantasy",
+      "Source": "BuiltIn",
+      "Tags": ["fantasy", "magic", "dreamy"]
+    }
+  },
+  "Forest": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Forest",
+        "Category": "Biome",
+        "Description": "Calm forest morning with drifting mist and dust in the light.",
+        "Tags": ["forest", "morning"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [60, 70, 55]
+        },
+        "Brightness": 1.8,
+        "ClockTime": 9,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [240, 245, 220]
+        },
+        "EnvironmentDiffuseScale": 0.6,
+        "EnvironmentSpecularScale": 0.4,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [120, 135, 115]
+        },
+        "ShadowSoftness": 0.4
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [180, 200, 180]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [100, 120, 100]
+        },
+        "Density": 0.4,
+        "Glare": 0,
+        "Haze": 1.5,
+        "Offset": 0.1
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Saturation": 0.05,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [245, 255, 240]
+          }
+        },
+        "SunRays": {
+          "Intensity": 0.1,
+          "Spread": 0.7
+        }
+      },
+      "Particles": {
+        "Dust": {
+          "Template": "Dust",
+          "Color": {
+            "$type": "Color3",
+            "rgb": [230, 230, 200]
+          },
+          "Rate": 15
+        },
+        "Mist": {
+          "Template": "Mist",
+          "Rate": 10
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Forest",
+      "Inherits": ["BaseForest"],
+      "Category": "Biome",
+      "Description": "Calm forest morning with drifting mist and dust in the light.",
+      "DisplayName": "Forest",
+      "Source": "BuiltIn",
+      "Tags": ["forest", "morning"]
+    }
+  },
+  "HeavyRain": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Heavy Rain",
+        "Category": "Weather",
+        "Description": "Heavy downpour with low visibility.",
+        "Tags": ["rain", "storm"]
+      },
+      "Lighting": {
+        "GlobalShadows": true,
+        "ShadowSoftness": 0.8
+      },
+      "Weather": {
+        "Type": "HeavyRain",
+        "Intensity": 0.85
+      }
+    },
+    "Summary": {
+      "Name": "HeavyRain",
+      "Category": "Weather",
+      "Description": "Heavy downpour with low visibility.",
+      "DisplayName": "Heavy Rain",
+      "Source": "BuiltIn",
+      "Tags": ["rain", "storm"]
+    }
+  },
+  "Horror": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Horror",
+        "Category": "Mood",
+        "Description": "Oppressive, desaturated night with thick sickly fog.",
+        "Tags": ["horror", "dark", "fog"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [15, 18, 15]
+        },
+        "Brightness": 0.3,
+        "ClockTime": 1,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [0, 0, 0]
+        },
+        "EnvironmentDiffuseScale": 0.1,
+        "EnvironmentSpecularScale": 0.2,
+        "ExposureCompensation": -0.3,
+        "GlobalShadows": true,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [40, 50, 40]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [80, 95, 80]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [25, 35, 25]
+        },
+        "Density": 0.65,
+        "Glare": 0,
+        "Haze": 3,
+        "Offset": 0
+      },
+      "Sky": {
+        "CelestialBodiesShown": false,
+        "StarCount": 0
+      },
+      "PostProcessing": {
+        "Blur": {
+          "Size": 2
+        },
+        "ColorCorrection": {
+          "Brightness": -0.05,
+          "Contrast": 0.2,
+          "Saturation": -0.55,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [215, 235, 215]
+          }
+        }
+      },
+      "Weather": {
+        "Type": "Fog",
+        "Intensity": 0.7
+      }
+    },
+    "Summary": {
+      "Name": "Horror",
+      "Category": "Mood",
+      "Description": "Oppressive, desaturated night with thick sickly fog.",
+      "DisplayName": "Horror",
+      "Source": "BuiltIn",
+      "Tags": ["horror", "dark", "fog"]
+    }
+  },
+  "LightRain": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Light Rain",
+        "Category": "Weather",
+        "Description": "Light steady rain.",
+        "Tags": ["rain"]
+      },
+      "Weather": {
+        "Type": "LightRain",
+        "Intensity": 0.5
+      }
+    },
+    "Summary": {
+      "Name": "LightRain",
+      "Category": "Weather",
+      "Description": "Light steady rain.",
+      "DisplayName": "Light Rain",
+      "Source": "BuiltIn",
+      "Tags": ["rain"]
+    }
+  },
+  "MistyForest": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Misty Forest",
+        "Category": "Forest",
+        "Description": "Cool, damp forest morning wrapped in fog.",
+        "Tags": ["forest", "fog", "mist"]
+      },
+      "Lighting": {
+        "Brightness": 1.5,
+        "ClockTime": 8,
+        "ExposureCompensation": 0
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [170, 190, 175]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [90, 110, 100]
+        },
+        "Density": 0.45,
+        "Glare": 0,
+        "Haze": 2.5
+      },
+      "Weather": {
+        "Type": "Fog",
+        "Intensity": 0.6
+      }
+    },
+    "Summary": {
+      "Name": "MistyForest",
+      "Category": "Forest",
+      "Description": "Cool, damp forest morning wrapped in fog.",
+      "DisplayName": "Misty Forest",
+      "Source": "BuiltIn",
+      "Tags": ["forest", "fog", "mist"]
+    }
+  },
+  "MoonlitNight": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Moonlit Night",
+        "Category": "Time of Day",
+        "Description": "Cool, luminous moonlit night with fireflies and low mist.",
+        "Tags": ["night", "moon", "fireflies"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [20, 22, 35]
+        },
+        "Brightness": 0.9,
+        "ClockTime": 23.5,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [0, 0, 0]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [0, 0, 0]
+        },
+        "EnvironmentDiffuseScale": 0.3,
+        "EnvironmentSpecularScale": 0.4,
+        "ExposureCompensation": 0.2,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [60, 70, 105]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [70, 80, 110]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [20, 25, 45]
+        },
+        "Density": 0.4,
+        "Glare": 0,
+        "Haze": 0.8,
+        "Offset": 0
+      },
+      "Sky": {
+        "CelestialBodiesShown": true,
+        "MoonAngularSize": 14,
+        "StarCount": 4000
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 0.9,
+          "Size": 30,
+          "Threshold": 1.4
+        },
+        "ColorCorrection": {
+          "Contrast": 0.08,
+          "Saturation": -0.15,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [215, 225, 255]
+          }
+        }
+      },
+      "Particles": {
+        "Fireflies": {
+          "Template": "Fireflies",
+          "Rate": 8
+        },
+        "Mist": {
+          "Template": "Mist",
+          "Rate": 8
+        }
+      }
+    },
+    "Summary": {
+      "Name": "MoonlitNight",
+      "Inherits": ["Night"],
+      "Category": "Time of Day",
+      "Description": "Cool, luminous moonlit night with fireflies and low mist.",
+      "DisplayName": "Moonlit Night",
+      "Source": "BuiltIn",
+      "Tags": ["night", "moon", "fireflies"]
+    }
+  },
+  "Night": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Night",
+        "Category": "Time of Day",
+        "Description": "Clear night with moonlight and stars.",
+        "Tags": ["night", "moon", "stars"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [20, 22, 35]
+        },
+        "Brightness": 0.6,
+        "ClockTime": 0,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [0, 0, 0]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [0, 0, 0]
+        },
+        "EnvironmentDiffuseScale": 0.3,
+        "EnvironmentSpecularScale": 0.4,
+        "ExposureCompensation": 0.2,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [45, 50, 75]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [70, 80, 110]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [20, 25, 45]
+        },
+        "Density": 0.4,
+        "Glare": 0,
+        "Haze": 0.8,
+        "Offset": 0
+      },
+      "Sky": {
+        "CelestialBodiesShown": true,
+        "MoonAngularSize": 14,
+        "StarCount": 4000
+      }
+    },
+    "Summary": {
+      "Name": "Night",
+      "Category": "Time of Day",
+      "Description": "Clear night with moonlight and stars.",
+      "DisplayName": "Night",
+      "Source": "BuiltIn",
+      "Tags": ["night", "moon", "stars"]
+    }
+  },
+  "Ocean": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Ocean",
+        "Category": "Biome",
+        "Description": "Open ocean with deep blue reflective water and a breeze.",
+        "Tags": ["ocean", "sea", "water"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [70, 80, 95]
+        },
+        "Brightness": 2.6,
+        "ClockTime": 15,
+        "EnvironmentDiffuseScale": 0.7,
+        "EnvironmentSpecularScale": 1,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [140, 150, 165]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [190, 215, 235]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [100, 130, 165]
+        },
+        "Density": 0.3,
+        "Glare": 0.6,
+        "Haze": 1.2,
+        "Offset": 0.35
+      },
+      "Clouds": {
+        "Cover": 0.5,
+        "Density": 0.55
+      },
+      "Water": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [20, 70, 110]
+        },
+        "Reflectance": 1,
+        "Transparency": 0.35,
+        "Underwater": {
+          "Enabled": true,
+          "BlurSize": 4,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [90, 160, 210]
+          }
+        },
+        "WaveSize": 0.35,
+        "WaveSpeed": 14
+      },
+      "Environment": {
+        "Wind": {
+          "Direction": {
+            "$type": "Vector3",
+            "xyz": [1, 0, 0.5]
+          },
+          "Speed": 18
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Ocean",
+      "Category": "Biome",
+      "Description": "Open ocean with deep blue reflective water and a breeze.",
+      "DisplayName": "Ocean",
+      "Source": "BuiltIn",
+      "Tags": ["ocean", "sea", "water"]
+    }
+  },
+  "Overcast": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Overcast",
+        "Category": "Weather",
+        "Description": "Flat grey overcast daylight.",
+        "Tags": ["overcast", "grey", "cloudy"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [80, 80, 85]
+        },
+        "Brightness": 1.6,
+        "ClockTime": 13,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [140, 140, 145]
+        },
+        "ShadowSoftness": 0.8
+      },
+      "Weather": {
+        "Type": "Overcast",
+        "Intensity": 0.85
+      }
+    },
+    "Summary": {
+      "Name": "Overcast",
+      "Category": "Weather",
+      "Description": "Flat grey overcast daylight.",
+      "DisplayName": "Overcast",
+      "Source": "BuiltIn",
+      "Tags": ["overcast", "grey", "cloudy"]
+    }
+  },
+  "Realistic": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Realistic",
+        "Category": "Style",
+        "Description": "Physically plausible midday lighting with sky-driven ambient and reflections.",
+        "Tags": ["realistic", "day"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [0, 0, 0]
+        },
+        "Brightness": 3,
+        "ClockTime": 13.5,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [0, 0, 0]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 245, 230]
+        },
+        "EnvironmentDiffuseScale": 1,
+        "EnvironmentSpecularScale": 1,
+        "ExposureCompensation": -0.1,
+        "GlobalShadows": true,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [100, 100, 100]
+        },
+        "ShadowSoftness": 0.15
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [199, 205, 215]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [106, 112, 125]
+        },
+        "Density": 0.3,
+        "Glare": 0.3,
+        "Haze": 0.6,
+        "Offset": 0.25
+      },
+      "Clouds": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [255, 255, 255]
+        },
+        "Cover": 0.5,
+        "Density": 0.6
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 0.4,
+          "Size": 24,
+          "Threshold": 2.2
+        },
+        "ColorCorrection": {
+          "Contrast": 0.05,
+          "Saturation": 0.02
+        },
+        "SunRays": {
+          "Intensity": 0.06,
+          "Spread": 0.6
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Realistic",
+      "Category": "Style",
+      "Description": "Physically plausible midday lighting with sky-driven ambient and reflections.",
+      "DisplayName": "Realistic",
+      "Source": "BuiltIn",
+      "Tags": ["realistic", "day"]
+    }
+  },
+  "SciFi": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Sci-Fi",
+        "Category": "Style",
+        "Description": "Cold teal alien light with hard contrast and strong bloom.",
+        "Tags": ["scifi", "alien", "teal"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [20, 60, 70]
+        },
+        "Brightness": 1.4,
+        "ClockTime": 16,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [60, 0, 90]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [120, 255, 240]
+        },
+        "EnvironmentDiffuseScale": 0.4,
+        "EnvironmentSpecularScale": 1,
+        "ExposureCompensation": -0.1,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [60, 130, 140]
+        },
+        "ShadowSoftness": 0.05
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [100, 210, 200]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [40, 20, 90]
+        },
+        "Density": 0.42,
+        "Glare": 2,
+        "Haze": 1.5,
+        "Offset": 0.05
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 1.6,
+          "Size": 36,
+          "Threshold": 0.9
+        },
+        "ColorCorrection": {
+          "Contrast": 0.25,
+          "Saturation": -0.1,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [220, 255, 250]
+          }
+        }
+      },
+      "Particles": {
+        "Dust": {
+          "Template": "Dust",
+          "Color": {
+            "$type": "Color3",
+            "rgb": [140, 255, 240]
+          },
+          "LightEmission": 0.6,
+          "Rate": 30
+        }
+      }
+    },
+    "Summary": {
+      "Name": "SciFi",
+      "Category": "Style",
+      "Description": "Cold teal alien light with hard contrast and strong bloom.",
+      "DisplayName": "Sci-Fi",
+      "Source": "BuiltIn",
+      "Tags": ["scifi", "alien", "teal"]
+    }
+  },
+  "Storm": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Storm",
+        "Category": "Weather",
+        "Description": "Thunderstorm with heavy rain and lightning.",
+        "Tags": ["storm", "rain", "lightning"]
+      },
+      "Lighting": {
+        "ClockTime": 15,
+        "GlobalShadows": true,
+        "ShadowSoftness": 0.9
+      },
+      "Weather": {
+        "Type": "Thunderstorm",
+        "Intensity": 0.8
+      }
+    },
+    "Summary": {
+      "Name": "Storm",
+      "Category": "Weather",
+      "Description": "Thunderstorm with heavy rain and lightning.",
+      "DisplayName": "Storm",
+      "Source": "BuiltIn",
+      "Tags": ["storm", "rain", "lightning"]
+    }
+  },
+  "Stylized": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Stylized",
+        "Category": "Style",
+        "Description": "Bright, saturated, soft-shadowed stylized look.",
+        "Tags": ["stylized", "cartoon", "bright"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [110, 110, 130]
+        },
+        "Brightness": 2.5,
+        "ClockTime": 14,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 240, 210]
+        },
+        "EnvironmentDiffuseScale": 0.2,
+        "EnvironmentSpecularScale": 0.1,
+        "ExposureCompensation": 0.2,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [170, 170, 185]
+        },
+        "ShadowSoftness": 0.6
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [190, 215, 255]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [140, 160, 210]
+        },
+        "Density": 0.25,
+        "Glare": 0.2,
+        "Haze": 0.5,
+        "Offset": 0.3
+      },
+      "Clouds": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [255, 255, 255]
+        },
+        "Cover": 0.55,
+        "Density": 0.45
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 1.1,
+          "Size": 30,
+          "Threshold": 1.3
+        },
+        "ColorCorrection": {
+          "Contrast": 0.1,
+          "Saturation": 0.3,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [255, 250, 240]
+          }
+        }
+      },
+      "Water": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [40, 170, 200]
+        },
+        "Reflectance": 0.5,
+        "Transparency": 0.6,
+        "WaveSize": 0.1,
+        "WaveSpeed": 6
+      }
+    },
+    "Summary": {
+      "Name": "Stylized",
+      "Category": "Style",
+      "Description": "Bright, saturated, soft-shadowed stylized look.",
+      "DisplayName": "Stylized",
+      "Source": "BuiltIn",
+      "Tags": ["stylized", "cartoon", "bright"]
+    }
+  },
+  "Sunrise": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Sunrise",
+        "Category": "Time of Day",
+        "Description": "Pink-gold early sunrise with cool shadows.",
+        "Tags": ["sunrise", "morning"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [60, 50, 70]
+        },
+        "Brightness": 1.6,
+        "ClockTime": 6.4,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [60, 60, 90]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 190, 150]
+        },
+        "EnvironmentDiffuseScale": 0.5,
+        "EnvironmentSpecularScale": 0.5,
+        "ExposureCompensation": 0.1,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [140, 120, 130]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [235, 180, 170]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [110, 100, 140]
+        },
+        "Density": 0.36,
+        "Glare": 0.4,
+        "Haze": 1.6,
+        "Offset": 0.15
+      },
+      "Clouds": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [255, 220, 215]
+        },
+        "Cover": 0.4,
+        "Density": 0.5
+      },
+      "PostProcessing": {
+        "ColorCorrection": {
+          "Saturation": 0.05,
+          "TintColor": {
+            "$type": "Color3",
+            "rgb": [255, 240, 235]
+          }
+        }
+      }
+    },
+    "Summary": {
+      "Name": "Sunrise",
+      "Category": "Time of Day",
+      "Description": "Pink-gold early sunrise with cool shadows.",
+      "DisplayName": "Sunrise",
+      "Source": "BuiltIn",
+      "Tags": ["sunrise", "morning"]
+    }
+  },
+  "Sunset": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Sunset",
+        "Category": "Time of Day",
+        "Description": "Warm low sun with orange sky and soft purple shadows.",
+        "Tags": ["sunset", "warm", "evening"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [70, 50, 60]
+        },
+        "Brightness": 2,
+        "ClockTime": 17.8,
+        "ColorShiftBottom": {
+          "$type": "Color3",
+          "rgb": [80, 50, 70]
+        },
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 170, 110]
+        },
+        "EnvironmentDiffuseScale": 0.5,
+        "EnvironmentSpecularScale": 0.6,
+        "ExposureCompensation": 0.1,
+        "GlobalShadows": true,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [150, 110, 100]
+        },
+        "ShadowSoftness": 0.3
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [245, 170, 130]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [120, 70, 90]
+        },
+        "Density": 0.33,
+        "Glare": 0.5,
+        "Haze": 1.8,
+        "Offset": 0.1
+      },
+      "Clouds": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [255, 215, 190]
+        },
+        "Cover": 0.45,
+        "Density": 0.55
+      }
+    },
+    "Summary": {
+      "Name": "Sunset",
+      "Category": "Time of Day",
+      "Description": "Warm low sun with orange sky and soft purple shadows.",
+      "DisplayName": "Sunset",
+      "Source": "BuiltIn",
+      "Tags": ["sunset", "warm", "evening"]
+    }
+  },
+  "Tropical": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Tropical",
+        "Category": "Biome",
+        "Description": "Bright, saturated tropical day with clear turquoise water.",
+        "Tags": ["tropical", "beach", "island"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [90, 90, 80]
+        },
+        "Brightness": 3,
+        "ClockTime": 11.5,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 245, 220]
+        },
+        "EnvironmentDiffuseScale": 0.7,
+        "EnvironmentSpecularScale": 0.8,
+        "ExposureCompensation": 0.1,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [160, 160, 150]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [185, 225, 245]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [120, 160, 200]
+        },
+        "Density": 0.26,
+        "Glare": 0.5,
+        "Haze": 0.8,
+        "Offset": 0.3
+      },
+      "Clouds": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [255, 255, 255]
+        },
+        "Cover": 0.4,
+        "Density": 0.5
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 0.6,
+          "Size": 24,
+          "Threshold": 1.8
+        },
+        "ColorCorrection": {
+          "Contrast": 0.05,
+          "Saturation": 0.2
+        }
+      },
+      "Water": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [30, 170, 190]
+        },
+        "Reflectance": 0.6,
+        "Transparency": 0.75,
+        "WaveSize": 0.1,
+        "WaveSpeed": 9
+      }
+    },
+    "Summary": {
+      "Name": "Tropical",
+      "Category": "Biome",
+      "Description": "Bright, saturated tropical day with clear turquoise water.",
+      "DisplayName": "Tropical",
+      "Source": "BuiltIn",
+      "Tags": ["tropical", "beach", "island"]
+    }
+  },
+  "TropicalRain": {
+    "Resolved": {
+      "Version": 1,
+      "Metadata": {
+        "Name": "Tropical Rain",
+        "Category": "Weather",
+        "Description": "Warm tropical shower over turquoise water.",
+        "Tags": ["tropical", "rain"]
+      },
+      "Lighting": {
+        "Ambient": {
+          "$type": "Color3",
+          "rgb": [90, 90, 80]
+        },
+        "Brightness": 1.8,
+        "ClockTime": 11.5,
+        "ColorShiftTop": {
+          "$type": "Color3",
+          "rgb": [255, 245, 220]
+        },
+        "EnvironmentDiffuseScale": 0.7,
+        "EnvironmentSpecularScale": 0.8,
+        "ExposureCompensation": 0,
+        "OutdoorAmbient": {
+          "$type": "Color3",
+          "rgb": [160, 160, 150]
+        }
+      },
+      "Atmosphere": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [185, 225, 245]
+        },
+        "Decay": {
+          "$type": "Color3",
+          "rgb": [120, 160, 200]
+        },
+        "Density": 0.26,
+        "Glare": 0.5,
+        "Haze": 0.8,
+        "Offset": 0.3
+      },
+      "Clouds": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [255, 255, 255]
+        },
+        "Cover": 0.4,
+        "Density": 0.5
+      },
+      "PostProcessing": {
+        "Bloom": {
+          "Intensity": 0.6,
+          "Size": 24,
+          "Threshold": 1.8
+        },
+        "ColorCorrection": {
+          "Contrast": 0.05,
+          "Saturation": 0.2
+        }
+      },
+      "Water": {
+        "Color": {
+          "$type": "Color3",
+          "rgb": [30, 170, 190]
+        },
+        "Reflectance": 0.6,
+        "Transparency": 0.55,
+        "WaveSize": 0.2,
+        "WaveSpeed": 14
+      },
+      "Weather": {
+        "Type": "LightRain",
+        "Intensity": 0.6,
+        "Wind": 10
+      }
+    },
+    "Summary": {
+      "Name": "TropicalRain",
+      "Inherits": ["Tropical"],
+      "Category": "Weather",
+      "Description": "Warm tropical shower over turquoise water.",
+      "DisplayName": "Tropical Rain",
+      "Source": "BuiltIn",
+      "Tags": ["tropical", "rain"]
+    }
+  }
+}

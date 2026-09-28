@@ -1,0 +1,11 @@
+{
+  "name": "VisualFX",
+  "tree": {
+    "$path": "init.luau",
+    "Core": { "$path": "Core" },
+    "Runtime": { "$path": "Runtime" },
+    "AI": { "$path": "AI" },
+    "Presets": { "$path": "Presets" },
+    "Codegen": { "$path": "Codegen" }
+  }
+}
